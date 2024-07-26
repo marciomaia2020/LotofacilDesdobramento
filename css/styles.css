@@ -1,0 +1,173 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px; /* Aumentado o tamanho máximo do container */
+  box-sizing: border-box; /* Inclui o padding na largura total */
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  text-align: center; /* Centraliza o título */
+}
+h3 {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  text-align: center; /* Centraliza o título */
+}
+
+.table-container {
+  display: flex;
+  justify-content: center; /* Centraliza a tabela */
+  margin-bottom: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%; /* Largura completa do container */
+  max-width: 400px; /* Largura máxima da tabela */
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+td {
+  padding: 8px; /* Padding ajustado para as células da tabela */
+  text-align: center;
+  background-color: #fff;
+}
+
+.number-selection {
+  margin-bottom: 20px;
+  text-align: center; /* Centraliza o conteúdo do número de seleção */
+}
+
+label {
+  display: block;
+  margin: 10px 0; /* Margem superior e inferior ajustada */
+  font-size: 1.1em;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: calc(100% - 20px); /* Largura do input ajustada para se alinhar ao container */
+  max-width: 150px;
+  padding: 8px;
+  margin: 5px auto; /* Margem automática para centralizar */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Inclui o padding e a borda na largura total */
+  text-align: center; /* Centraliza o texto dentro dos inputs */
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px; /* Ajuste o padding para deixar os botões menores */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px; /* Adiciona uma margem pequena ao redor dos botões */
+  font-size: 14px; /* Ajusta o tamanho da fonte para ser menor */
+  display: inline-block; /* Alinha os botões horizontalmente */
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Adiciona um container para alinhar os botões horizontalmente */
+.button-container {
+  text-align: center; /* Centraliza os botões no container */
+  margin: 20px 0; /* Adiciona uma margem vertical ao redor do container dos botões */
+}
+
+#jogosGerados {
+  margin-top: 20px;
+  font-size: 1.2em;
+  text-align: left; /* Alinha o texto à esquerda */
+}
+small {
+  font-size: 0.8em; /* Ajuste o tamanho da fonte conforme necessário */
+  color: #555; /* Cor do texto, pode ser ajustada conforme a sua preferência */
+}
+.instructions{
+  text-align: left; /* Alinha o texto à esquerda */
+  font-size: 0.8em; /* Ajuste o tamanho da fonte conforme necessário */
+}
+.button-generateGames{
+  text-align: center; /* Alinha o texto à esquerda */
+}
+.number-selection {
+  margin-bottom: 20px;
+  text-align: center; /* Centraliza o conteúdo do número de seleção */
+}
+
+label {
+  display: block;
+  margin: 10px 0; /* Margem superior e inferior ajustada */
+  font-size: 1.1em;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: calc(100% - 20px); /* Largura do input ajustada para se alinhar ao container */
+  max-width: 150px;
+  padding: 8px;
+  margin: 5px auto; /* Margem */
+}
+
+.userInformation{
+  text-align: center; /* Alinha o texto à esquerda */
+  text-align: justify;
+  font-size: 0.9em;
+}
+.userInformationUnderstanding{
+  text-align: left; /* Alinha o texto ao centro */
+  text-align: justify;
+  font-size: 0.9em;
+}
+/* Adicione seus estilos CSS aqui */
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+.table-container {
+  margin-bottom: 20px;
+}
+
+.number-selection {
+  margin-bottom: 10px;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.userInformation, .userInformationUnderstanding {
+  margin-top: 20px;
+}
+/* Estilo para a dezena fixa */
+.dezena-fixa {
+  color: #ff00dd; /* Amarelo escuro */
+  font-weight: bold;
+}
+.info-container{
+  text-align: justify;
+}
