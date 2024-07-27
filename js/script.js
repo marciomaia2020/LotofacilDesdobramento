@@ -1,18 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
     const numerosTable = document.getElementById('numeros').getElementsByTagName('tr')[0];
-    
+
     // Preenche a tabela com números de 01 a 25
     for (let i = 1; i <= 25; i++) {
         const td = document.createElement('td');
         td.textContent = i.toString().padStart(2, '0');
+        td.classList.add('numero');
         numerosTable.appendChild(td);
     }
 });
 
 function gerarJogos() {
+    const dezenasAdicionaisCheckboxes = document.querySelectorAll('.number-selection input[type="checkbox"]:checked');
+    const dezenasAdicionais = Array.from(dezenasAdicionaisCheckboxes).map(checkbox => parseInt(checkbox.value));
     const excluir = document.getElementById('excluir').value.split(',').map(num => Number(num.trim())).filter(num => !isNaN(num));
     const fixar = Number(document.getElementById('fixar').value.trim());
-    const dezenasAdicionais = Number(document.getElementById('dezenas-adicionais').value.trim());
     const quantidadeJogos = Number(document.getElementById('jogos').value.trim());
     const jogosGeradosDiv = document.getElementById('jogosGerados');
     jogosGeradosDiv.innerHTML = ''; // Limpa jogos anteriores
@@ -32,97 +34,74 @@ function gerarJogos() {
     // Números disponíveis excluindo os selecionados pelo usuário
     let numeros = [];
     for (let i = 1; i <= 25; i++) {
-        if (!excluir.includes(i) && i !== fixar) {
+        if (!excluir.includes(i)) {
             numeros.push(i);
         }
     }
 
-    if (numeros.length < 14) {
-        alert('Não há números suficientes disponíveis para gerar os jogos. Verifique suas exclusões.');
-        return;
-    }
-
-    // Gera os jogos com base na lógica fornecida
-    const jogos = [];
+    // Geração dos jogos
     for (let i = 0; i < quantidadeJogos; i++) {
-        let jogo = [fixar];
-        let nums = [...numeros]; // Cópia do array de números disponíveis
-        nums = nums.filter(num => num !== fixar); // Remove a dezena fixa da lista de números disponíveis
-
-        // Adiciona números ao jogo
+        let jogo = [];
+        if (fixar) {
+            jogo.push(fixar);
+        }
+        // Adiciona as dezenas adicionais
+        jogo = jogo.concat(dezenasAdicionais);
+        // Adiciona números aleatórios restantes
         while (jogo.length < 15) {
-            let num = nums[Math.floor(Math.random() * nums.length)];
-            if (!jogo.includes(num)) {
-                jogo.push(num);
+            let numeroAleatorio = numeros[Math.floor(Math.random() * numeros.length)];
+            if (!jogo.includes(numeroAleatorio)) {
+                jogo.push(numeroAleatorio);
             }
         }
-        
-        // Ordena e formata o jogo
-        jogo.sort((a, b) => a - b);
-        jogos.push(jogo);
-    }
+        jogo = jogo.sort((a, b) => a - b); // Ordena os números
+        let jogoStr = jogo.map(num => num.toString().padStart(2, '0')).join(', ');
 
-    // Exibe os jogos gerados
-    jogos.forEach((jogo, index) => {
-        const jogoFormatado = jogo.map(num => num === fixar ? `<span class="dezena-fixa">${num.toString().padStart(2, '0')}</span>` : num.toString().padStart(2, '0')).join(', ');
-        jogosGeradosDiv.innerHTML += `<p><small>Jogo ${index + 1}:</small> ${jogoFormatado}</p>`;
-    });
+        // Adiciona o jogo à visualização
+        const p = document.createElement('p');
+        p.textContent = jogoStr;
+        jogosGeradosDiv.appendChild(p);
+    }
 }
 
 function salvarJogo() {
     const jogosGeradosDiv = document.getElementById('jogosGerados');
-    if (!jogosGeradosDiv.innerHTML) {
+    const jogos = Array.from(jogosGeradosDiv.getElementsByTagName('p')).map(p => p.textContent);
+
+    if (jogos.length === 0) {
         alert('Nenhum jogo gerado para salvar.');
         return;
     }
 
-    let textoParaSalvar = '';
-    const jogos = jogosGeradosDiv.getElementsByTagName('p');
-
-    for (let jogo of jogos) {
-        // Remove a parte "Jogo X:" e formata as dezenas separadas por espaço
-        const jogoTexto = jogo.innerText.replace(/^Jogo \d+:\s*/, '');
-        const jogoFormatado = jogoTexto.split(',').map(num => num.trim()).join(' ');
-        textoParaSalvar += jogoFormatado + '\n';
-    }
-
-    // Cria um blob com o texto formatado
-    const blob = new Blob([textoParaSalvar], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    
-    // Cria um link temporário para download
-    const a = document.createElement('a');
+    let conteudo = jogos.join('\n');
+    let blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
     a.href = url;
-    a.download = 'Lotofacil.txt';
-    document.body.appendChild(a);
+    a.download = 'jogos_loto.txt';
     a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url); // Limpa o URL
+    URL.revokeObjectURL(url);
 }
 
 function resetarJogo() {
     document.getElementById('excluir').value = '';
     document.getElementById('fixar').value = '';
-    document.getElementById('dezenas-adicionais').value = '';
     document.getElementById('jogos').value = '';
+    document.querySelectorAll('.number-selection input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
     document.getElementById('jogosGerados').innerHTML = '';
 }
 
 function exportarParaExcel() {
     const jogosGeradosDiv = document.getElementById('jogosGerados');
-    if (!jogosGeradosDiv.innerHTML) {
+    const jogos = Array.from(jogosGeradosDiv.getElementsByTagName('p')).map(p => p.textContent);
+
+    if (jogos.length === 0) {
         alert('Nenhum jogo gerado para exportar.');
         return;
     }
 
-    let data = [];
-    const jogos = jogosGeradosDiv.getElementsByTagName('p');
-    for (let jogo of jogos) {
-        data.push([jogo.innerText]);
-    }
-
-    let worksheet = XLSX.utils.aoa_to_sheet(data);
-    let workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Jogos');
-    XLSX.writeFile(workbook, 'jogos.xlsx');
+    let wb = XLSX.utils.book_new();
+    let ws = XLSX.utils.aoa_to_sheet(jogos.map(jogo => [jogo]));
+    XLSX.utils.book_append_sheet(wb, ws, "Jogos");
+    XLSX.writeFile(wb, 'jogos_loto.xlsx');
 }
