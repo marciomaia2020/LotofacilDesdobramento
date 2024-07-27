@@ -45,7 +45,7 @@
         </div>
         <div class="number-selection">
             <label for="dezenas-adicionais">Dezenas adicionais: (<span style="color: red;">opcional</span>)</label>
-            <input type="number" id="dezenas-adicionais" min="0" max="5" placeholder="Ex: 2">
+            <input type="text" id="dezenas-adicionais" placeholder="Ex: 18, 21">
         </div>
         <div class="button-generateGames">
             <button onclick="gerarJogos()">Gerar Jogos</button>
@@ -98,11 +98,127 @@
                 <p>Se você quiser gerar jogos de forma a maximizar a cobertura e garantir que cada jogo tenha uma combinação única de 15 dezenas com uma dezena fixa incluída, pode usar a lógica descrita. Isso é especialmente útil em loterias onde você quer ter a certeza de que a dezena fixa estará presente em cada combinação gerada.</p>
             </div>
         </div>
-
-
-
     </div>
 
     <script src="/js/script.js"></script> <!-- Corrija o caminho do JavaScript se necessário -->
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const numerosTable = document.getElementById('numeros').getElementsByTagName('tr')[0];
+        
+        // Preenche a tabela com números de 01 a 25
+        for (let i = 1; i <= 25; i++) {
+            const td = document.createElement('td');
+            td.textContent = i.toString().padStart(2, '0');
+            numerosTable.appendChild(td);
+        }
+    });
+
+    function gerarJogos() {
+        const excluir = document.getElementById('excluir').value.split(',').map(num => Number(num.trim())).filter(num => !isNaN(num));
+        const fixar = Number(document.getElementById('fixar').value.trim());
+        const dezenasAdicionais = document.getElementById('dezenas-adicionais').value.split(',').map(num => Number(num.trim())).filter(num => !isNaN(num) && num >= 1 && num <= 25);
+        const quantidadeJogos = Number(document.getElementById('jogos').value.trim());
+        const jogosGeradosDiv = document.getElementById('jogosGerados');
+        jogosGeradosDiv.innerHTML = ''; // Limpa jogos anteriores
+
+        // Validação básica
+        if (excluir.length !== 3 || isNaN(fixar) || isNaN(quantidadeJogos) || !Number.isInteger(quantidadeJogos)) {
+            alert('Por favor, insira as dezenas corretamente e selecione uma quantidade de jogos válida.');
+            return;
+        }
+
+        // Verifica se a dezena fixada está entre as dezenas excluídas
+        if (excluir.includes(fixar)) {
+            alert('A dezena a ser fixada não pode estar entre as dezenas excluídas. Por favor, escolha outra.');
+            return;
+        }
+
+        // Verifica se as dezenas adicionais estão entre as dezenas excluídas ou a dezena fixa
+        for (let dezenaAdicional of dezenasAdicionais) {
+            if (excluir.includes(dezenaAdicional) || dezenaAdicional === fixar) {
+                alert('As dezenas adicionais não podem estar entre as dezenas excluídas ou ser a dezena fixa. Por favor, escolha outras.');
+                return;
+            }
+        }
+
+        // Números disponíveis (de 01 a 25, exceto os excluídos e a dezena fixa)
+        const numerosDisponiveis = [];
+        for (let i = 1; i <= 25; i++) {
+            if (!excluir.includes(i) && i !== fixar && !dezenasAdicionais.includes(i)) {
+                numerosDisponiveis.push(i);
+            }
+        }
+
+        if (numerosDisponiveis.length < 15 - dezenasAdicionais.length - 1) {
+            alert('Não há dezenas suficientes para gerar os jogos com as restrições fornecidas.');
+            return;
+        }
+
+        // Geração dos jogos
+        const jogos = [];
+        for (let i = 0; i < quantidadeJogos; i++) {
+            const numerosSorteados = [...numerosDisponiveis];
+            numerosSorteados.sort(() => Math.random() - 0.5); // Embaralha os números disponíveis
+
+            const jogo = [fixar, ...dezenasAdicionais, ...numerosSorteados.slice(0, 15 - 1 - dezenasAdicionais.length)];
+            jogo.sort((a, b) => a - b); // Ordena o jogo
+            jogos.push(jogo);
+        }
+
+        // Exibição dos jogos gerados
+        jogos.forEach((jogo, index) => {
+            const jogoDiv = document.createElement('div');
+            jogoDiv.textContent = `Jogo ${index + 1}: `;
+
+            jogo.forEach(dezena => {
+                const span = document.createElement('span');
+                span.textContent = dezena.toString().padStart(2, '0');
+                if (dezena === fixar) {
+                    span.style.color = 'green'; // Destaque para a dezena fixa
+                }
+                jogoDiv.appendChild(span);
+                jogoDiv.appendChild(document.createTextNode(' '));
+            });
+
+            jogosGeradosDiv.appendChild(jogoDiv);
+        });
+    }
+
+    function salvarJogo() {
+        const jogosGeradosDiv = document.getElementById('jogosGerados');
+        const jogosText = jogosGeradosDiv.innerText.replace(/Jogo \d+: /g, '').trim().replace(/\n/g, '\r\n');
+
+        const blob = new Blob([jogosText], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'jogos_lotofacil.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function resetarJogo() {
+        document.getElementById('excluir').value = '';
+        document.getElementById('fixar').value = '';
+        document.getElementById('jogos').value = '';
+        document.getElementById('dezenas-adicionais').value = '';
+        document.getElementById('jogosGerados').innerHTML = '';
+    }
+
+    function exportarParaExcel() {
+        const jogosGeradosDiv = document.getElementById('jogosGerados');
+        const jogos = jogosGeradosDiv.innerText.trim().split('\n').map(jogo => jogo.replace(/Jogo \d+: /, '').trim().split(' '));
+        
+        const ws = XLSX.utils.aoa_to_sheet(jogos);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Jogos");
+        
+        XLSX.writeFile(wb, "jogos_lotofacil.xlsx");
+    }
+</script>
+
 </body>
 </html>

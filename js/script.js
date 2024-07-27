@@ -93,7 +93,7 @@ function salvarJogo() {
     // Cria um link temporário para download
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'jogos.txt';
+    a.download = 'Lotofacil.txt';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
