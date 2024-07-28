@@ -44,16 +44,9 @@
             <input type="number" id="jogos" min="1" max="100" placeholder="Ex: 5">
         </div>
         <div class="number-selection">
-            <label>Dezenas adicionais: (<span style="color: red;">opcional</span>)</label>
-            <div>
-              <input type="checkbox" value="1"> 1
-              <input type="checkbox" value="2"> 2
-              <input type="checkbox" value="3"> 3
-              <input type="checkbox" value="4"> 4
-              <input type="checkbox" value="5"> 5
-            </div>
+            <label for="dezenas-adicionais">Dezenas adicionais: (<span style="color: red;">opcional</span>)</label>
+            <input type="number" id="dezenas-adicionais" min="0" max="5" placeholder="Ex: 2">
         </div>
-
         <div class="button-generateGames">
             <button onclick="gerarJogos()">Gerar Jogos</button>
         </div>
@@ -62,7 +55,7 @@
             <button onclick="resetarJogo()">Resetar Jogo</button>
             <button onclick="exportarParaExcel()">Exportar para Excel</button>
         </div>
-
+        
         <div class="userInformation">
             <p>Os jogos serão gerados com 15 dezenas.</p>
             <p>Escolha até 5 dezenas adicionais (<span style="color: red;">opcional</span>).</p>
@@ -84,28 +77,29 @@
             </ol>
         </div>
 
-        <div class="info-container">
-            <h2>Resumo do Processo de Geração de Jogos</h2>
-            <p>Sim, a técnica utilizada para gerar os jogos pode ser considerada uma forma de desdobramento, mas com um foco específico e personalizado. Aqui está um resumo de como isso funciona e como a quantidade de jogos afeta o processo:</p>
+            <div class="info-container">
+                <h2>Resumo do Processo de Geração de Jogos</h2>
+                <p>Sim, a técnica utilizada para gerar os jogos pode ser considerada uma forma de desdobramento, mas com um foco específico e personalizado. Aqui está um resumo de como isso funciona e como a quantidade de jogos afeta o processo:</p>
 
-            <h3>O Que Está Sendo Feito</h3>
-            <ul>
-                <li><strong>Inclusão da Dezena Fixa:</strong> A dezena fixa é incluída em todos os jogos. Esta é uma estratégia comum em sistemas de loteria para garantir que uma dezena específica esteja sempre presente.</li>
-                <li><strong>Distribuição de Números Restantes:</strong> Os números restantes são distribuídos entre os jogos gerados. Nenhum número é repetido dentro de um mesmo jogo, e a quantidade de números adicionais é determinada pela quantidade total de dezenas (15) menos a dezena fixa.</li>
-                <li><strong>Variedade e Exclusões:</strong> A quantidade de jogos e a exclusão de certas dezenas influenciam a variabilidade dos jogos. Se você escolhe uma quantidade maior de jogos, o algoritmo tenta garantir uma distribuição mais variada dos números restantes, respeitando as exclusões e a presença obrigatória da dezena fixa.</li>
-            </ul>
+                <h3>O Que Está Sendo Feito</h3>
+                <ul>
+                    <li><strong>Inclusão da Dezena Fixa:</strong> A dezena fixa é incluída em todos os jogos. Esta é uma estratégia comum em sistemas de loteria para garantir que uma dezena específica esteja sempre presente.</li>
+                    <li><strong>Distribuição de Números Restantes:</strong> Os números restantes são distribuídos entre os jogos gerados. Nenhum número é repetido dentro de um mesmo jogo, e a quantidade de números adicionais é determinada pela quantidade total de dezenas (15) menos a dezena fixa.</li>
+                    <li><strong>Variedade e Exclusões:</strong> A quantidade de jogos e a exclusão de certas dezenas influenciam a variabilidade dos jogos. Se você escolhe uma quantidade maior de jogos, o algoritmo tenta garantir uma distribuição mais variada dos números restantes, respeitando as exclusões e a presença obrigatória da dezena fixa.</li>
+                </ul>
 
-            <h3>Impacto da Quantidade de Jogos</h3>
-            <ul>
-                <li><strong>Menos Jogos:</strong> Se você gerar menos jogos, pode haver uma chance maior de que alguns números não apareçam em todos os jogos, especialmente se a quantidade de números disponíveis for relativamente pequena.</li>
-                <li><strong>Mais Jogos:</strong> Quando você gera um número maior de jogos, o algoritmo tenta distribuir os números disponíveis de forma que todos sejam utilizados de maneira equilibrada, considerando a quantidade total de jogos e os números excluídos.</li>
-            </ul>
+                <h3>Impacto da Quantidade de Jogos</h3>
+                <ul>
+                    <li><strong>Menos Jogos:</strong> Se você gerar menos jogos, pode haver uma chance maior de que alguns números não apareçam em todos os jogos, especialmente se a quantidade de números disponíveis for relativamente pequena.</li>
+                    <li><strong>Mais Jogos:</strong> Quando você gera um número maior de jogos, o algoritmo tenta distribuir os números disponíveis de forma que todos sejam utilizados de maneira equilibrada, considerando a quantidade total de jogos e os números excluídos.</li>
+                </ul>
 
-            <h3>Exemplo de Desdobramento</h3>
-            <p>Se você quiser gerar jogos de forma a maximizar a cobertura e garantir que cada jogo tenha uma combinação única de 15 dezenas com uma dezena fixa incluída, pode usar a lógica descrita. Isso é especialmente útil em loterias onde você quer ter a certeza de que a dezena fixa estará presente em cada combinação gerada.</p>
+                <h3>Exemplo de Desdobramento</h3>
+                <p>Se você quiser gerar jogos de forma a maximizar a cobertura e garantir que cada jogo tenha uma combinação única de 15 dezenas com uma dezena fixa incluída, pode usar a lógica descrita. Isso é especialmente útil em loterias onde você quer ter a certeza de que a dezena fixa estará presente em cada combinação gerada.</p>
+            </div>
         </div>
     </div>
-    
+
     <script src="/js/script.js"></script> <!-- Corrija o caminho do JavaScript se necessário -->
 </body>
 </html>
