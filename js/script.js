@@ -42,6 +42,20 @@ function gerarJogos() {
         return;
     }
 
+    // Função para calcular o tamanho da fonte com base no número de jogos
+    function getFontSize(numJogos) {
+        if (numJogos <= 15) {
+            return '16px'; // Tamanho padrão para até 15 jogos
+        } else if (numJogos <= 20) {
+            return '14px'; // Reduz um pouco o tamanho para até 20 jogos
+        } else {
+            return '12px'; // Reduz ainda mais para mais de 20 jogos
+        }
+    }
+
+    // Calcula o tamanho da fonte com base no número de jogos
+    const fontSize = getFontSize(quantidadeJogos);
+
     for (let j = 0; j < quantidadeJogos; j++) {
         let jogo = [fixar]; // Começa com a dezena fixada
         let numerosRestantes = [...numeros];
@@ -62,11 +76,19 @@ function gerarJogos() {
             jogo.push(numerosRestantes.splice(randomIndex, 1)[0]);
         }
 
-        jogo.sort((a, b) => a - b);
+        jogo.sort((a, b) => a - b); // Ordena as dezenas
 
-        const p = document.createElement('p');
-        p.textContent = jogo.map(num => num.toString().padStart(2, '0')).join(', ');
-        jogosGeradosDiv.appendChild(p);
+        const jogoElement = document.createElement('p');
+        jogoElement.textContent = `J${j + 1}- ${jogo.map(num => num.toString().padStart(2, '0')).join(', ')}`;
+        jogoElement.style.border = '1px solid #ccc';
+        jogoElement.style.padding = '10px';
+        jogoElement.style.margin = '5px 0';
+        jogoElement.style.textAlign = 'center'; // Centraliza o texto
+        jogoElement.style.backgroundColor = 'green'; // Define a cor de fundo
+        jogoElement.style.color = 'white'; // Define a cor do texto
+        jogoElement.style.fontSize = fontSize; // Ajusta o tamanho da fonte
+
+        jogosGeradosDiv.appendChild(jogoElement);
     }
 }
 

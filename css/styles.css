@@ -1,5 +1,7 @@
+* font-family: Arial, sans-serif;
+
+
 body {
-  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,7 +16,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 600px; /* Aumentado o tamanho máximo do container */
+  max-width: 900px; /* Aumentado o tamanho máximo do container */
   box-sizing: border-box; /* Inclui o padding na largura total */
 }
 
@@ -107,7 +109,7 @@ small {
 }
 .instructions{
   text-align: left; /* Alinha o texto à esquerda */
-  font-size: 0.8em; /* Ajuste o tamanho da fonte conforme necessário */
+  font-size: 0.9em; /* Ajuste o tamanho da fonte conforme necessário */
 }
 .button-generateGames{
   text-align: center; /* Alinha o texto à esquerda */
@@ -137,9 +139,9 @@ input[type="number"] {
   font-size: 0.9em;
 }
 .userInformationUnderstanding{
-  text-align: left; /* Alinha o texto ao centro */
-  text-align: justify;
-  font-size: 0.9em;
+  text-align: left; /* Alinha o texto à esquerda */
+  font-size: 0.9em; /* Ajuste o tamanho da fonte conforme necessário */
+
 }
 /* Adicione seus estilos CSS aqui */
 
@@ -160,8 +162,10 @@ input[type="number"] {
   margin-top: 20px;
 }
 
-.userInformation, .userInformationUnderstanding {
+.userInformation{
   margin-top: 20px;
+  font-size: 0.7em;
+  text-align: center;
 }
 /* Estilo para a dezena fixa */
 .dezena-fixa {
@@ -170,4 +174,5 @@ input[type="number"] {
 }
 .info-container{
   text-align: justify;
+  font-size: 0.8em;
 }

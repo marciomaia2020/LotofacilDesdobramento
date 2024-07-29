@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desdobramento Lotofácil</title>
-    <link rel="stylesheet" href="/css/styles.css"> <!-- Corrija o caminho do CSS se necessário -->
+    <link rel="stylesheet" href="./css/styles.css"> <!-- Corrija o caminho do CSS se necessário -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -22,13 +22,14 @@
         </div>
 
         <div class="instructions">
-            <p><strong>Instruções:</strong></p>
-            <ul>
+            <p><strong>INSTRUÇÕES:</strong></p>
+            <ol>
                 <li>Exclua exatamente <strong>3 dezenas</strong>.</li>
                 <li>Escolha <strong>uma dezena</strong> para fixar.</li>
                 <li>Selecione a <strong>quantidade de jogos</strong> que deseja gerar.</li>
                 <li>Escolha até 5 dezenas adicionais (<span style="color: red;">opcional</span>).</li>
-            </ul>
+                <li>Salve o jogo (como *.txt) ou Exporte para o excel.</li>
+            </ol>
         </div>
 
         <div class="number-selection">
@@ -57,8 +58,7 @@
         </div>
         
         <div class="userInformation">
-            <p>Os jogos serão gerados com 15 dezenas.</p>
-            <p>Escolha até 5 dezenas adicionais (<span style="color: red;">opcional</span>).</p>
+            <p>Os jogos serão gerados com 15 dezenas. Caso não haja adição de dezena (<span style="color: red;">opcional.</span>)</p>
         </div>
 
         <div id="jogosGerados">
@@ -66,7 +66,7 @@
         </div>
 
         <div class="userInformationUnderstanding">
-            <th><b><i>Resumo</i></b></th>
+            <th><b><i>RESUMO</i></b></th>
             <ol>
                 <li>A <b>dezena à fixar</b> não será incluída nos números aleatórios gerados.</li>
                 <li>As <b>dezenas excluídas</b> serão removidas da lista de <i>números disponíveis</i>.</li>
@@ -100,6 +100,6 @@
         </div>
     </div>
 
-    <script src="/js/script.js"></script> <!-- Corrija o caminho do JavaScript se necessário -->
+    <script src="./js/script.js"></script> <!-- Corrija o caminho do JavaScript se necessário -->
 </body>
 </html>
