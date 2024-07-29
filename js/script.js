@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1; i <= 25; i++) {
         const td = document.createElement('td');
         td.textContent = i.toString().padStart(2, '0');
+        td.style.fontFamily = 'Arial, sans-serif'; // Fonte para números
+        td.style.fontSize = '14px'; // Tamanho da fonte
+        td.style.padding = '5px'; // Espaçamento interno
+        td.style.border = '1px solid #ccc'; // Borda
+        td.style.textAlign = 'center'; // Centraliza o texto
+        td.style.color = '#333'; // Cor do texto
         numerosTable.appendChild(td);
     }
 });
@@ -32,10 +38,13 @@ function gerarJogos() {
     // Números disponíveis excluindo os selecionados pelo usuário
     let numeros = [];
     for (let i = 1; i <= 25; i++) {
-        if (!excluir.includes(i) && i !== fixar) {
+        if (!excluir.includes(i)) {
             numeros.push(i);
         }
     }
+
+    // Remove a dezena fixada dos números restantes
+    numeros = numeros.filter(num => num !== fixar);
 
     if (numeros.length < 14) {
         alert('Não há números suficientes disponíveis para gerar jogos.');
@@ -43,7 +52,7 @@ function gerarJogos() {
     }
 
     // Define o limite máximo de jogos para evitar problemas de desempenho
-    const limiteMaximoJogos = 20; // Ajuste esse valor conforme necessário
+    const limiteMaximoJogos = 5000; // Ajuste esse valor conforme necessário
 
     if (quantidadeJogos > limiteMaximoJogos) {
         alert(`A quantidade máxima de jogos é ${limiteMaximoJogos}. Por favor, ajuste a quantidade de jogos.`);
@@ -64,6 +73,9 @@ function gerarJogos() {
     // Calcula o tamanho da fonte com base no número de jogos
     const fontSize = getFontSize(quantidadeJogos);
 
+    // Conjunto para verificar duplicidade
+    const jogosUnicos = new Set();
+
     for (let j = 0; j < quantidadeJogos; j++) {
         let jogo = [fixar]; // Começa com a dezena fixada
         let numerosRestantes = [...numeros];
@@ -75,9 +87,6 @@ function gerarJogos() {
             adicionaisSelecionados.push(numerosRestantes.splice(randomIndex, 1)[0]);
         }
 
-        adicionaisSelecionados.sort((a, b) => a - b);
-        jogo = jogo.concat(adicionaisSelecionados);
-
         // Preenche com números restantes até ter a quantidade correta de dezenas
         while (jogo.length < 15 + dezenasAdicionais) {
             const randomIndex = Math.floor(Math.random() * numerosRestantes.length);
@@ -86,17 +95,36 @@ function gerarJogos() {
 
         jogo.sort((a, b) => a - b); // Ordena as dezenas
 
-        const jogoElement = document.createElement('p');
-        jogoElement.textContent = `J${j + 1}- ${jogo.map(num => num.toString().padStart(2, '0')).join(', ')}`;
-        jogoElement.style.border = '1px solid #ccc';
-        jogoElement.style.padding = '10px';
-        jogoElement.style.margin = '5px 0';
-        jogoElement.style.textAlign = 'center'; // Centraliza o texto
-        jogoElement.style.backgroundColor = 'green'; // Define a cor de fundo
-        jogoElement.style.color = 'white'; // Define a cor do texto
-        jogoElement.style.fontSize = fontSize; // Ajusta o tamanho da fonte
+        // Converte o jogo para uma string única para checar duplicidade
+        const jogoString = jogo.join(', ');
 
-        jogosGeradosDiv.appendChild(jogoElement);
+        // Verifica se o jogo já foi gerado
+        if (!jogosUnicos.has(jogoString)) {
+            jogosUnicos.add(jogoString);
+
+            const jogoElement = document.createElement('p');
+            jogoElement.innerHTML = `J${j + 1}- ${jogo.map(num => {
+                if (num === fixar) {
+                    // Destaca a dezena fixada com uma cor diferente
+                    return `<span style="color: red; font-weight: bold; font-family: Arial, sans-serif;">${num.toString().padStart(2, '0')}</span>`;
+                } else {
+                    return `<span style="font-family: Courier New, monospace;">${num.toString().padStart(2, '0')}</span>`;
+                }
+            }).join(', ')}`;
+            jogoElement.style.border = '1px solid #dcdcdc'; // Tom de cinza claro para a borda
+            jogoElement.style.padding = '10px';
+            jogoElement.style.margin = '5px 0';
+            jogoElement.style.textAlign = 'center'; // Centraliza o texto
+            jogoElement.style.backgroundColor = '#f5f5f5'; // Tom de cinza claro para o fundo
+            jogoElement.style.color = '#333'; // Tom de cinza escuro para o texto
+            jogoElement.style.fontSize = fontSize; // Ajusta o tamanho da fonte
+            jogoElement.style.borderRadius = '4px'; // Bordas arredondadas
+
+            jogosGeradosDiv.appendChild(jogoElement);
+        } else {
+            // Reduz o índice para garantir que o número desejado de jogos seja gerado
+            j--;
+        }
     }
 }
 
@@ -104,14 +132,28 @@ function salvarJogo() {
     const jogosGeradosDiv = document.getElementById('jogosGerados');
     const jogos = jogosGeradosDiv.getElementsByTagName('p');
     let conteudo = '';
+    
     for (let jogo of jogos) {
-        conteudo += jogo.textContent + '\n';
+        // Obter o texto do jogo
+        let texto = jogo.textContent;
+        
+        // Remove a letra 'J' seguida de números e espaços
+        texto = texto.replace(/^J\d+\s*-?\s*/i, '');
+        
+        // Substituir as vírgulas por espaços
+        texto = texto.replace(/,/g, ' ');
+        
+        // Adicionar o texto ao conteúdo final
+        conteudo += texto.trim() + '\n';
     }
 
+    // Criar um blob com o conteúdo e gerar um link para download
     const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'jogos_lotofacil.txt';
+    
+    // Simular o clique no link para iniciar o download
     link.click();
 }
 
