@@ -42,6 +42,14 @@ function gerarJogos() {
         return;
     }
 
+    // Define o limite máximo de jogos para evitar problemas de desempenho
+    const limiteMaximoJogos = 20; // Ajuste esse valor conforme necessário
+
+    if (quantidadeJogos > limiteMaximoJogos) {
+        alert(`A quantidade máxima de jogos é ${limiteMaximoJogos}. Por favor, ajuste a quantidade de jogos.`);
+        return;
+    }
+
     // Função para calcular o tamanho da fonte com base no número de jogos
     function getFontSize(numJogos) {
         if (numJogos <= 15) {
