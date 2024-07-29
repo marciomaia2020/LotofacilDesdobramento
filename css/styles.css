@@ -56,6 +56,17 @@ td {
 .number-selection {
   margin-bottom: 20px;
   text-align: center; /* Centraliza o conteúdo do número de seleção */
+  /*display: block;*/
+  /*display: inline;*/
+  /*display: inline-block;*/
+  /*display: flex;*/
+  display: grid;
+ /* display: none;*/
+ /* display: list-item;*/
+ /* display: table;*/
+ /* display: table-row;*/
+ /* display: table-cell;*/
+  /*display: table-caption;*/
 }
 
 label {
@@ -165,7 +176,7 @@ input[type="number"] {
 .userInformation{
   margin-top: 20px;
   font-size: 0.7em;
-  text-align: center;
+  text-align: justify;
 }
 /* Estilo para a dezena fixa */
 .dezena-fixa {
