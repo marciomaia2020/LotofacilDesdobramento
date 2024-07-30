@@ -187,3 +187,80 @@ input[type="number"] {
   text-align: justify;
   font-size: 0.8em;
 }
+/*AJUSTES PARA MELHORAR A EXPERIÊNCIA DO USUARIO E TBM A VIZUALIZAÇÃO*/
+
+/*
+1. Flexbox e Grid Layout
+Utilize o Flexbox ou o Grid Layout para garantir que os elementos se ajustem de forma flexível ao tamanho da tela.
+*/
+
+/* Utilize flexbox para a .container e os elementos internos */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Certifique-se de que a tabela também se ajuste corretamente */
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* Permite rolagem horizontal se necessário */
+}
+
+/* Ajuste o tamanho dos botões e inputs para diferentes tamanhos de tela */
+button, input {
+  width: 100%;
+  max-width: 200px; /* Limite máximo de largura para botões e inputs */
+  margin: 5px 0; /* Adiciona um pequeno espaçamento */
+}
+
+/*
+2. Media Queries
+Utilize media queries para ajustar o estilo com base no tamanho da tela.
+*/
+/* Ajuste para telas menores */
+@media (max-width: 768px) {
+  .container {
+      padding: 10px;
+  }
+  
+  .button-container {
+      flex-direction: column; /* Alinha os botões verticalmente */
+      align-items: center;
+  }
+
+  button {
+      width: 100%; /* Botões ocupam toda a largura disponível */
+      margin: 5px 0;
+  }
+
+  .number-selection input {
+      width: 100%; /* Inputs ocupam toda a largura disponível */
+      max-width: none; /* Remove o limite máximo de largura */
+  }
+}
+
+/*
+3. Overflow e Scroll
+Certifique-se de que elementos que podem exceder a largura da tela sejam roláveis.
+*/
+.table-container {
+  overflow-x: auto;
+}
+
+#jogosGerados {
+  word-wrap: break-word;
+  text-align: center;
+}
+
+
+/*
+4. Ajuste da Tabela
+Certifique-se de que a tabela se ajuste corretamente dentro do contêiner.
+*/
+#numeros {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* Ajusta automaticamente a largura das colunas */
+}
