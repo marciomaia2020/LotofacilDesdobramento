@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desdobramento Lotofácil</title>
+    <link rel="stylesheet" href="./css/styles.css"> <!-- Corrija o caminho do CSS se necessário -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+            <h1>Desdobramento Lotofácil</h1>
+
+            <h3>Números disponíveis (Desdobramento para 22 dezenas)</h3>
+
+            <div class="table-container">
+                <table id="numeros">
+                    <tr>
+                        <!-- Os números serão inseridos aqui via JavaScript -->
+                    </tr>
+                </table>
+            </div>
+
+            <div class="instructions">
+                <p><strong>INSTRUÇÕES:</strong></p>
+                <ol>
+                    <li>Exclua exatamente <strong>3 dezenas</strong>.</li>
+                    <li>Escolha <strong>uma dezena</strong> para fixar.</li>
+                    <li>Selecione a <strong>quantidade de jogos</strong> que deseja gerar.</li>
+                    <li>Escolha até 5 dezenas adicionais (<span style="color: red;">opcional</span>).</li>
+                    <li>Salve o jogo (como *.txt) ou Exporte para o excel.</li>
+                </ol>
+            </div>
+
+            <div class="number-selection">
+                <label for="excluir">Dezenas a excluir:</label>
+                <input type="text" id="excluir" placeholder="Ex: 01, 05, 10">
+            </div>
+            <div class="number-selection">
+                <label for="fixar">Dezena a fixar:</label>
+                <input type="text" id="fixar" placeholder="Ex: 07">
+            </div>
+            <div class="number-selection">
+                <label for="jogos">Quantidade de jogos:</label>
+                <input type="number" id="jogos" min="1" max="100" placeholder="Ex: 5">
+            </div>
+            <div class="number-selection">
+                <label for="dezenas-adicionais">Dezenas adicionais: (<span style="color: red;">opcional</span>)</label>
+                <input type="number" id="dezenas-adicionais" min="0" max="5" placeholder="Ex: 2">
+            </div>
+            <div class="button-generateGames">
+                <button onclick="gerarJogos()">Gerar Jogos</button>
+            </div>
+            <div class="button-container">
+                <button onclick="salvarJogo()">Salvar Jogo</button>
+                <button onclick="resetarJogo()">Resetar Jogo</button>
+                <button onclick="exportarParaExcel()">Exportar para Excel</button>
+            </div>
+            
+            <div class="userInformation">
+                <p>Os jogos serão gerados com 15 dezenas. Caso não haja adição de dezena (<span style="color: red;">opcional.</span>)</p>
+                <p>Por enquanto apenas jogos com 15 dezenas pode ser adicionado no programa cofiridor de jogos.</p>
+                <p>Os jogos gerados são checados automaticamente afim de não haver duplicidade.</p>
+                <p>O limite para a geração de jogos está setada para 1000.</p>
+            </div>
+
+            <div id="jogosGerados">
+                <!-- Os jogos gerados serão inseridos aqui via JavaScript -->
+            </div>
+
+            <div class="userInformationUnderstanding">
+                <th><b><i>RESUMO</i></b></th>
+                <ol>
+                    <li>A <b>dezena à fixar</b> não será incluída nos números aleatórios gerados.</li>
+                    <li>As <b>dezenas excluídas</b> serão removidas da lista de <i>números disponíveis</i>.</li>
+                    <li>Ao <b>gerar jogos</b> o formato sempre será 01, 02, ....</li>
+                    <li>Ao clicar em <b>salvar jogo</b> será gerado um arquivo *.txt para download.</li>
+                    <li>O <i>formato do arquivo para download</i> virá pronto para ser copiado/colado no
+                    <a href="https://play.google.com/store/apps/details?id=gerador.licoski.com&hl=pt_BR&pli=1" target="_blank"> conferidor da lotofácil</a>.</li>
+                </ol>
+            </div>
+
+                <div class="info-container">
+                    <h2>Resumo do Processo de Geração de Jogos</h2>
+                    <p>Sim, a técnica utilizada para gerar os jogos pode ser considerada uma forma de desdobramento, mas com um foco específico e personalizado. Aqui está um resumo de como isso funciona e como a quantidade de jogos afeta o processo:</p>
+
+                    <h3>O Que Está Sendo Feito</h3>
+                    <ul>
+                        <li><strong>Inclusão da Dezena Fixa:</strong> A dezena fixa é incluída em todos os jogos. Esta é uma estratégia comum em sistemas de loteria para garantir que uma dezena específica esteja sempre presente.</li>
+                        <li><strong>Distribuição de Números Restantes:</strong> Os números restantes são distribuídos entre os jogos gerados. Nenhum número é repetido dentro de um mesmo jogo, e a quantidade de números adicionais é determinada pela quantidade total de dezenas (15) menos a dezena fixa.</li>
+                        <li><strong>Variedade e Exclusões:</strong> A quantidade de jogos e a exclusão de certas dezenas influenciam a variabilidade dos jogos. Se você escolhe uma quantidade maior de jogos, o algoritmo tenta garantir uma distribuição mais variada dos números restantes, respeitando as exclusões e a presença obrigatória da dezena fixa.</li>
+                    </ul>
+
+                    <h3>Impacto da Quantidade de Jogos</h3>
+                    <ul>
+                        <li><strong>Menos Jogos:</strong> Se você gerar menos jogos, pode haver uma chance maior de que alguns números não apareçam em todos os jogos, especialmente se a quantidade de números disponíveis for relativamente pequena.</li>
+                        <li><strong>Mais Jogos:</strong> Quando você gera um número maior de jogos, o algoritmo tenta distribuir os números disponíveis de forma que todos sejam utilizados de maneira equilibrada, considerando a quantidade total de jogos e os números excluídos.</li>
+                    </ul>
+
+                    <h3>Exemplo de Desdobramento</h3>
+                    <p>Se você quiser gerar jogos de forma a maximizar a cobertura e garantir que cada jogo tenha uma combinação única de 15 dezenas com uma dezena fixa incluída, pode usar a lógica descrita. Isso é especialmente útil em loterias onde você quer ter a certeza de que a dezena fixa estará presente em cada combinação gerada.</p>
+                </div>
+        </div>
+    
+
+    <script src="./js/script.js"></script> <!-- Corrija o caminho do JavaScript se necessário -->
+</body>
+</html>
+document.addEventListener("DOMContentLoaded", () => {
+    const numerosTable = document.getElementById('numeros').getElementsByTagName('tr')[0];
+    
+    // Preenche a tabela com números de 01 a 25
+    for (let i = 1; i <= 25; i++) {
+        const td = document.createElement('td');
+        td.textContent = i.toString().padStart(2, '0');
+        td.style.fontFamily = 'Arial, sans-serif'; // Fonte para números
+        td.style.fontSize = '14px'; // Tamanho da fonte
+        td.style.padding = '5px'; // Espaçamento interno
+        td.style.border = '1px solid #ccc'; // Borda
+        td.style.textAlign = 'center'; // Centraliza o texto
+        td.style.color = '#333'; // Cor do texto
+        numerosTable.appendChild(td);
+    }
+});
+
+function gerarJogos() {
+    const excluir = document.getElementById('excluir').value.split(',').map(num => Number(num.trim())).filter(num => !isNaN(num));
+    const fixar = Number(document.getElementById('fixar').value.trim());
+    const dezenasAdicionais = Number(document.getElementById('dezenas-adicionais').value.trim());
+    const quantidadeJogos = Number(document.getElementById('jogos').value.trim());
+    const jogosGeradosDiv = document.getElementById('jogosGerados');
+    jogosGeradosDiv.innerHTML = ''; // Limpa jogos anteriores
+
+    // Validação básica
+    if (excluir.length !== 3 || isNaN(fixar) || isNaN(quantidadeJogos) || !Number.isInteger(quantidadeJogos) || dezenasAdicionais < 0 || dezenasAdicionais > 5) {
+        alert('Por favor, insira as dezenas corretamente e selecione uma quantidade de jogos válida.');
+        return;
+    }
+
+    // Verifica se a dezena fixada está entre as dezenas excluídas
+    if (excluir.includes(fixar)) {
+        alert('A dezena a ser fixada não pode estar entre as dezenas excluídas. Por favor, escolha outra.');
+        return;
+    }
+
+    // Números disponíveis excluindo os selecionados pelo usuário
+    let numeros = [];
+    for (let i = 1; i <= 25; i++) {
+        if (!excluir.includes(i)) {
+            numeros.push(i);
+        }
+    }
+
+    // Remove a dezena fixada dos números restantes
+    numeros = numeros.filter(num => num !== fixar);
+
+    if (numeros.length < 14) {
+        alert('Não há números suficientes disponíveis para gerar jogos.');
+        return;
+    }
+
+    // Define o limite máximo de jogos para evitar problemas de desempenho
+    const limiteMaximoJogos = 5000; // Ajuste esse valor conforme necessário
+
+    if (quantidadeJogos > limiteMaximoJogos) {
+        alert(`A quantidade máxima de jogos é ${limiteMaximoJogos}. Por favor, ajuste a quantidade de jogos.`);
+        return;
+    }
+
+    // Função para calcular o tamanho da fonte com base no número de jogos
+    function getFontSize(numJogos) {
+        if (numJogos <= 15) {
+            return '16px'; // Tamanho padrão para até 15 jogos
+        } else if (numJogos <= 20) {
+            return '14px'; // Reduz um pouco o tamanho para até 20 jogos
+        } else {
+            return '12px'; // Reduz ainda mais para mais de 20 jogos
+        }
+    }
+
+    // Calcula o tamanho da fonte com base no número de jogos
+    const fontSize = getFontSize(quantidadeJogos);
+
+    // Conjunto para verificar duplicidade
+    const jogosUnicos = new Set();
+
+    for (let j = 0; j < quantidadeJogos; j++) {
+        let jogo = [fixar]; // Começa com a dezena fixada
+        let numerosRestantes = [...numeros];
+
+        // Seleciona as dezenas adicionais (opcional)
+        let adicionaisSelecionados = [];
+        for (let i = 0; i < dezenasAdicionais; i++) {
+            const randomIndex = Math.floor(Math.random() * numerosRestantes.length);
+            adicionaisSelecionados.push(numerosRestantes.splice(randomIndex, 1)[0]);
+        }
+
+        // Preenche com números restantes até ter a quantidade correta de dezenas
+        while (jogo.length < 15 + dezenasAdicionais) {
+            const randomIndex = Math.floor(Math.random() * numerosRestantes.length);
+            jogo.push(numerosRestantes.splice(randomIndex, 1)[0]);
+        }
+
+        jogo.sort((a, b) => a - b); // Ordena as dezenas
+
+        // Converte o jogo para uma string única para checar duplicidade
+        const jogoString = jogo.join(', ');
+
+        // Verifica se o jogo já foi gerado
+        if (!jogosUnicos.has(jogoString)) {
+            jogosUnicos.add(jogoString);
+
+            const jogoElement = document.createElement('p');
+            jogoElement.innerHTML = `J${j + 1}- ${jogo.map(num => {
+                if (num === fixar) {
+                    // Destaca a dezena fixada com uma cor diferente
+                    return `<span style="color: red; font-weight: bold; font-family: Arial, sans-serif;">${num.toString().padStart(2, '0')}</span>`;
+                } else {
+                    return `<span style="font-family: Courier New, monospace;">${num.toString().padStart(2, '0')}</span>`;
+                }
+            }).join(', ')}`;
+            jogoElement.style.border = '1px solid #dcdcdc'; // Tom de cinza claro para a borda
+            jogoElement.style.padding = '10px';
+            jogoElement.style.margin = '5px 0';
+            jogoElement.style.textAlign = 'center'; // Centraliza o texto
+            jogoElement.style.backgroundColor = '#f5f5f5'; // Tom de cinza claro para o fundo
+            jogoElement.style.color = '#333'; // Tom de cinza escuro para o texto
+            jogoElement.style.fontSize = fontSize; // Ajusta o tamanho da fonte
+            jogoElement.style.borderRadius = '4px'; // Bordas arredondadas
+
+            jogosGeradosDiv.appendChild(jogoElement);
+        } else {
+            // Reduz o índice para garantir que o número desejado de jogos seja gerado
+            j--;
+        }
+    }
+}
+
+function salvarJogo() {
+    const jogosGeradosDiv = document.getElementById('jogosGerados');
+    const jogos = jogosGeradosDiv.getElementsByTagName('p');
+    let conteudo = '';
+    
+    for (let jogo of jogos) {
+        // Obter o texto do jogo
+        let texto = jogo.textContent;
+        
+        // Remove a letra 'J' seguida de números e espaços
+        texto = texto.replace(/^J\d+\s*-?\s*/i, '');
+        
+        // Substituir as vírgulas por espaços
+        texto = texto.replace(/,/g, ' ');
+        
+        // Adicionar o texto ao conteúdo final
+        conteudo += texto.trim() + '\n';
+    }
+
+    // Criar um blob com o conteúdo e gerar um link para download
+    const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'jogos_lotofacil.txt';
+    
+    // Simular o clique no link para iniciar o download
+    link.click();
+}
+
+function resetarJogo() {
+    document.getElementById('excluir').value = '';
+    document.getElementById('fixar').value = '';
+    document.getElementById('jogos').value = '';
+    document.getElementById('dezenas-adicionais').value = '';
+    document.getElementById('jogosGerados').innerHTML = '';
+}
+
+function exportarParaExcel() {
+    const jogosGeradosDiv = document.getElementById('jogosGerados');
+    const jogos = jogosGeradosDiv.getElementsByTagName('p');
+    let dados = [];
+    for (let jogo of jogos) {
+        dados.push(jogo.textContent.split(', '));
+    }
+
+    const ws = XLSX.utils.aoa_to_sheet(dados);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Jogos');
+    XLSX.writeFile(wb, 'jogos_lotofacil.xlsx');
+}
+* font-family: Arial, sans-serif;
+
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px; /* Aumentado o tamanho máximo do container */
+  box-sizing: border-box; /* Inclui o padding na largura total */
+}
+
+h1, h2 {
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  text-align: center; /* Centraliza o título */
+}
+h3, h4, h5, h6 {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  text-align: center; /* Centraliza o título */
+}
+
+.table-container {
+  display: flex;
+  justify-content: center; /* Centraliza a tabela */
+  margin-bottom: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%; /* Largura completa do container */
+  max-width: 400px; /* Largura máxima da tabela */
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+td {
+  padding: 8px; /* Padding ajustado para as células da tabela */
+  text-align: center;
+  background-color: #fff;
+}
+
+.number-selection {
+  margin-bottom: 20px;
+  text-align: center; /* Centraliza o conteúdo do número de seleção */
+  /*display: block;*/
+  /*display: inline;*/
+  /*display: inline-block;*/
+  /*display: flex;*/
+  display: grid;
+ /* display: none;*/
+ /* display: list-item;*/
+ /* display: table;*/
+ /* display: table-row;*/
+ /* display: table-cell;*/
+  /*display: table-caption;*/
+}
+
+label {
+  display: block;
+  margin: 10px 0; /* Margem superior e inferior ajustada */
+  font-size: 1.1em;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: calc(100% - 20px); /* Largura do input ajustada para se alinhar ao container */
+  max-width: 150px;
+  padding: 8px;
+  margin: 5px auto; /* Margem automática para centralizar */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Inclui o padding e a borda na largura total */
+  text-align: center; /* Centraliza o texto dentro dos inputs */
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px; /* Ajuste o padding para deixar os botões menores */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px; /* Adiciona uma margem pequena ao redor dos botões */
+  font-size: 14px; /* Ajusta o tamanho da fonte para ser menor */
+  display: inline-block; /* Alinha os botões horizontalmente */
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Adiciona um container para alinhar os botões horizontalmente */
+.button-container {
+  text-align: center; /* Centraliza os botões no container */
+  margin: 20px 0; /* Adiciona uma margem vertical ao redor do container dos botões */
+}
+
+#jogosGerados {
+  margin-top: 20px;
+  font-size: 1.2em;
+  text-align: left; /* Alinha o texto à esquerda */
+}
+small {
+  font-size: 0.8em; /* Ajuste o tamanho da fonte conforme necessário */
+  color: #555; /* Cor do texto, pode ser ajustada conforme a sua preferência */
+}
+.instructions{
+  text-align: left; /* Alinha o texto à esquerda */
+  font-size: 0.9em; /* Ajuste o tamanho da fonte conforme necessário */
+}
+.button-generateGames{
+  text-align: center; /* Alinha o texto à esquerda */
+}
+.number-selection {
+  margin-bottom: 20px;
+  text-align: center; /* Centraliza o conteúdo do número de seleção */
+}
+
+label {
+  display: block;
+  margin: 10px 0; /* Margem superior e inferior ajustada */
+  font-size: 1.1em;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: calc(100% - 20px); /* Largura do input ajustada para se alinhar ao container */
+  max-width: 150px;
+  padding: 8px;
+  margin: 5px auto; /* Margem */
+}
+
+.userInformation{
+  text-align: center; /* Alinha o texto à esquerda */
+  text-align: justify;
+  font-size: 0.9em;
+}
+.userInformationUnderstanding{
+  text-align: left; /* Alinha o texto à esquerda */
+  font-size: 0.9em; /* Ajuste o tamanho da fonte conforme necessário */
+
+}
+/* Adicione seus estilos CSS aqui */
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+.table-container {
+  margin-bottom: 20px;
+}
+
+.number-selection {
+  margin-bottom: 10px;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.userInformation{
+  margin-top: 20px;
+  font-size: 0.7em;
+  text-align: justify;
+}
+/* Estilo para a dezena fixa */
+.dezena-fixa {
+  color: #ff00dd; /* Amarelo escuro */
+  font-weight: bold;
+}
+.info-container{
+  text-align: justify;
+  font-size: 0.8em;
+}
