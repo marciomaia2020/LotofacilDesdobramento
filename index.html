@@ -32,29 +32,31 @@
                 </ol>
             </div>
 
-            <div class="number-selection">
+            <div class="input-container">
                 <label for="excluir">Dezenas a excluir:</label>
                 <input type="text" id="excluir" placeholder="Ex: 01, 05, 10">
+                <span id="excluir-error" class="error"></span>
             </div>
-            <div class="number-selection">
+    
+            <div class="input-container">
                 <label for="fixar">Dezena a fixar:</label>
                 <input type="text" id="fixar" placeholder="Ex: 07">
+                <span id="fixar-error" class="error"></span>
             </div>
-            <div class="number-selection">
+    
+            <div class="input-container">
                 <label for="jogos">Quantidade de jogos:</label>
                 <input type="number" id="jogos" min="1" max="100" placeholder="Ex: 5">
+                <span id="jogos-error" class="error"></span>
             </div>
-            <div class="number-selection">
+    
+            <div class="input-container">
                 <label for="dezenas-adicionais">Dezenas adicionais: (<span style="color: red;">opcional</span>)</label>
                 <input type="number" id="dezenas-adicionais" min="0" max="5" placeholder="Ex: 2">
             </div>
+    
             <div class="button-generateGames">
-                <button onclick="gerarJogos()">Gerar Jogos</button>
-            </div>
-            <div class="button-container">
-                <button onclick="salvarJogo()">Salvar Jogo</button>
-                <button onclick="resetarJogo()">Resetar Jogo</button>
-                <button onclick="exportarParaExcel()">Exportar para Excel</button>
+                <button id="gerar-jogos" disabled onclick="gerarJogos()">Gerar Jogos</button>
             </div>
             
             <div class="userInformation">

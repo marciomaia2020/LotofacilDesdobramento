@@ -264,3 +264,6 @@ Certifique-se de que a tabela se ajuste corretamente dentro do contêiner.
   border-collapse: collapse;
   table-layout: auto; /* Ajusta automaticamente a largura das colunas */
 }
+.error { color: red; }
+.valid { color: green; }
+.input-container { margin-bottom: 10px; }

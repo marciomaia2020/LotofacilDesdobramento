@@ -178,3 +178,68 @@ function exportarParaExcel() {
     XLSX.utils.book_append_sheet(wb, ws, 'Jogos');
     XLSX.writeFile(wb, 'jogos_lotofacil.xlsx');
 }
+//INICIO PARA VALIDAÇÃO DOS IMPUTS
+
+function validarExcluir() {
+    const excluirInput = document.getElementById('excluir');
+    const excluirError = document.getElementById('excluir-error');
+    const excluirValues = excluirInput.value.split(',').map(num => num.trim());
+    
+    if (excluirValues.length !== 3) {
+        excluirError.textContent = 'Você deve excluir exatamente 3 dezenas.';
+        return false;
+    } else {
+        excluirError.textContent = '';
+        return true;
+    }
+}
+
+function validarFixar() {
+    const fixarInput = document.getElementById('fixar');
+    const fixarError = document.getElementById('fixar-error');
+    const fixarValue = fixarInput.value.trim();
+    
+    if (fixarValue === '') {
+        fixarError.textContent = 'Você deve escolher uma dezena para fixar.';
+        return false;
+    } else {
+        fixarError.textContent = '';
+        return true;
+    }
+}
+
+function validarJogos() {
+    const jogosInput = document.getElementById('jogos');
+    const jogosError = document.getElementById('jogos-error');
+    const jogosValue = parseInt(jogosInput.value, 10);
+    
+    if (isNaN(jogosValue) || jogosValue < 1 || jogosValue > 1000) {
+        jogosError.textContent = 'Selecione um número válido de jogos (1 a 1000).';
+        return false;
+    } else {
+        jogosError.textContent = '';
+        return true;
+    }
+}
+
+function validarFormulario() {
+    const isExcluirValid = validarExcluir();
+    const isFixarValid = validarFixar();
+    const isJogosValid = validarJogos();
+
+    const gerarJogosButton = document.getElementById('gerar-jogos');
+    gerarJogosButton.disabled = !(isExcluirValid && isFixarValid && isJogosValid);
+}
+
+document.getElementById('excluir').addEventListener('input', validarFormulario);
+document.getElementById('fixar').addEventListener('input', validarFormulario);
+document.getElementById('jogos').addEventListener('input', validarFormulario);
+
+/*
+function gerarJogos() {
+    // Lógica para gerar os jogos vai aqui
+    alert('Jogos gerados!');
+}*/
+
+
+//FINAL PARA VALIDAÇÃO DOS INPUTS
