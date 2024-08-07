@@ -5,12 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1; i <= 25; i++) {
         const td = document.createElement('td');
         td.textContent = i.toString().padStart(2, '0');
-        td.style.fontFamily = 'Arial, sans-serif'; // Fonte para números
-        td.style.fontSize = '14px'; // Tamanho da fonte
-        td.style.padding = '5px'; // Espaçamento interno
-        td.style.border = '1px solid #ccc'; // Borda
-        td.style.textAlign = 'center'; // Centraliza o texto
-        td.style.color = '#333'; // Cor do texto
+        td.style.fontFamily = 'Arial, sans-serif';
+        td.style.fontSize = '14px';
+        td.style.padding = '5px';
+        td.style.border = '1px solid #ccc';
+        td.style.textAlign = 'center';
+        td.style.color = '#333';
         numerosTable.appendChild(td);
     }
 });
@@ -73,6 +73,17 @@ function gerarJogos() {
     // Calcula o tamanho da fonte com base no número de jogos
     const fontSize = getFontSize(quantidadeJogos);
 
+    // Adiciona um cabeçalho acima dos jogos gerados
+    const header = document.createElement('div');
+    header.innerHTML = `<span style="color: red; font-weight: bold;">${quantidadeJogos}</span> Jogo${quantidadeJogos > 1 ? 's' : ''} gerado${quantidadeJogos > 1 ? 's' : ''} com sucesso!`;
+    header.style.backgroundColor = '#dff0d8';
+    header.style.padding = '10px';
+    header.style.border = '1px solid #d0e9c6';
+    header.style.borderRadius = '5px';
+    header.style.textAlign = 'center';
+    header.style.marginBottom = '15px';
+    jogosGeradosDiv.appendChild(header);
+
     // Conjunto para verificar duplicidade
     const jogosUnicos = new Set();
 
@@ -126,58 +137,30 @@ function gerarJogos() {
             j--;
         }
     }
+
+    // Mensagem de sucesso exibida ao centro da tela
+    const mensagemSucesso = document.createElement('div');
+    mensagemSucesso.innerHTML = `<span style="color: red; font-weight: bold;">${quantidadeJogos}</span> Jogo${quantidadeJogos > 1 ? 's' : ''} gerado${quantidadeJogos > 1 ? 's' : ''} com sucesso!`;
+    mensagemSucesso.style.position = 'fixed';
+    mensagemSucesso.style.top = '50%';
+    mensagemSucesso.style.left = '50%';
+    mensagemSucesso.style.transform = 'translate(-50%, -50%)';
+    mensagemSucesso.style.backgroundColor = '#dff0d8';
+    mensagemSucesso.style.padding = '20px';
+    mensagemSucesso.style.border = '1px solid #d0e9c6';
+    mensagemSucesso.style.borderRadius = '5px';
+    mensagemSucesso.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+    mensagemSucesso.style.zIndex = '1000';
+    document.body.appendChild(mensagemSucesso);
+
+    setTimeout(() => {
+        mensagemSucesso.remove();
+    }, 3000); // Remove a mensagem após 3 segundos
 }
 
-function salvarJogo() {
-    const jogosGeradosDiv = document.getElementById('jogosGerados');
-    const jogos = jogosGeradosDiv.getElementsByTagName('p');
-    let conteudo = '';
-    
-    for (let jogo of jogos) {
-        // Obter o texto do jogo
-        let texto = jogo.textContent;
-        
-        // Remove a letra 'J' seguida de números e espaços
-        texto = texto.replace(/^J\d+\s*-?\s*/i, '');
-        
-        // Substituir as vírgulas por espaços
-        texto = texto.replace(/,/g, ' ');
-        
-        // Adicionar o texto ao conteúdo final
-        conteudo += texto.trim() + '\n';
-    }
+// Restante das funções de validação e outras lógicas
 
-    // Criar um blob com o conteúdo e gerar um link para download
-    const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'jogos_lotofacil.txt';
-    
-    // Simular o clique no link para iniciar o download
-    link.click();
-}
 
-function resetarJogo() {
-    document.getElementById('excluir').value = '';
-    document.getElementById('fixar').value = '';
-    document.getElementById('jogos').value = '';
-    document.getElementById('dezenas-adicionais').value = '';
-    document.getElementById('jogosGerados').innerHTML = '';
-}
-
-function exportarParaExcel() {
-    const jogosGeradosDiv = document.getElementById('jogosGerados');
-    const jogos = jogosGeradosDiv.getElementsByTagName('p');
-    let dados = [];
-    for (let jogo of jogos) {
-        dados.push(jogo.textContent.split(', '));
-    }
-
-    const ws = XLSX.utils.aoa_to_sheet(dados);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Jogos');
-    XLSX.writeFile(wb, 'jogos_lotofacil.xlsx');
-}
 //INICIO PARA VALIDAÇÃO DOS IMPUTS
 
 function validarExcluir() {
@@ -243,3 +226,100 @@ function gerarJogos() {
 
 
 //FINAL PARA VALIDAÇÃO DOS INPUTS
+
+
+
+//ESTE
+function salvarJogo() {
+    const jogosGeradosDiv = document.getElementById('jogosGerados');
+    const jogos = jogosGeradosDiv.getElementsByTagName('p');
+    let conteudo = '';
+    
+    for (let jogo of jogos) {
+        // Obter o texto do jogo
+        let texto = jogo.textContent;
+        
+        // Remove a letra 'J' seguida de números e espaços
+        texto = texto.replace(/^J\d+\s*-?\s*/i, '');
+        
+        // Substituir as vírgulas por espaços
+        texto = texto.replace(/,/g, ' ');
+        
+        // Adicionar o texto ao conteúdo final
+        conteudo += texto.trim() + '\n';
+    }
+
+    // Criar um blob com o conteúdo e gerar um link para download
+    const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'jogos_lotofacil.txt';
+    
+    // Simular o clique no link para iniciar o download
+    link.click();
+}
+
+//ESTE
+function resetarJogo() {
+    document.getElementById('excluir').value = '';
+    document.getElementById('fixar').value = '';
+    document.getElementById('jogos').value = '';
+    document.getElementById('dezenas-adicionais').value = '';
+    document.getElementById('jogosGerados').innerHTML = '';
+
+    document.getElementById('excluir-error').textContent = '';
+    document.getElementById('fixar-error').textContent = '';
+    document.getElementById('jogos-error').textContent = '';
+}
+
+//ESTE
+function exportarParaExcel() {
+    const jogosGeradosDiv = document.getElementById('jogosGerados');
+    if (!jogosGeradosDiv) {
+        alert('Elemento com id "jogosGerados" não encontrado.');
+        return;
+    }
+
+    const jogos = jogosGeradosDiv.getElementsByTagName('p');
+    if (jogos.length === 0) {
+        alert('Nenhum jogo encontrado para exportar.');
+        return;
+    }
+
+    let dados = [];
+    let maxDezenas = 0;
+
+    for (let jogo of jogos) {
+        // Extrai o texto e separa os números
+        const texto = jogo.textContent;
+        const partes = texto.split('-')[1].trim(); // Extrai a parte após o hífen
+        const dezenas = partes.split(', ').map(num => num.trim()); // Divide as dezenas
+
+        // Atualiza o número máximo de dezenas
+        if (dezenas.length > maxDezenas) {
+            maxDezenas = dezenas.length;
+        }
+
+        // Adiciona cada dezena em uma célula separada na mesma linha
+        dados.push(dezenas);
+    }
+
+    // Cria o cabeçalho com base no número máximo de dezenas
+    let cabecalho = [];
+    for (let i = 1; i <= maxDezenas; i++) {
+        cabecalho.push(`Dez ${i < 10 ? '0' + i : i}`); // Formata o número com dois dígitos
+    }
+    
+    // Adiciona o cabeçalho à primeira linha dos dados
+    dados.unshift(cabecalho);
+
+    // Cria a planilha e o livro
+    const ws = XLSX.utils.aoa_to_sheet(dados);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Jogos');
+
+    // Salva o arquivo Excel
+    XLSX.writeFile(wb, 'jogos_lotofacil.xlsx');
+}
+
+

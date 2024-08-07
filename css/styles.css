@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /*height: 100vh;*/
   background-color: #f0f0f0;
   margin: 0;
 }
@@ -24,6 +24,7 @@ h1, h2 {
   margin-bottom: 20px;
   font-size: 1.8em;
   text-align: center; /* Centraliza o título */
+  color: #A55592;
 }
 h3, h4, h5, h6 {
   margin-bottom: 20px;
@@ -73,6 +74,7 @@ label {
   display: block;
   margin: 10px 0; /* Margem superior e inferior ajustada */
   font-size: 1.1em;
+  font-weight: bold;
 }
 
 input[type="text"],
@@ -88,7 +90,7 @@ input[type="number"] {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #A55592;
   color: white;
   padding: 8px 16px; /* Ajuste o padding para deixar os botões menores */
   border: none;
@@ -264,6 +266,13 @@ Certifique-se de que a tabela se ajuste corretamente dentro do contêiner.
   border-collapse: collapse;
   table-layout: auto; /* Ajusta automaticamente a largura das colunas */
 }
-.error { color: red; }
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
 .valid { color: green; }
-.input-container { margin-bottom: 10px; }
+.input-container ,p { 
+  text-align: center;
+  margin-bottom: 10px; }

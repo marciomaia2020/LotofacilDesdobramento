@@ -6,103 +6,108 @@
     <title>Desdobramento Lotofácil</title>
     <link rel="stylesheet" href="./css/styles.css"> <!-- Corrija o caminho do CSS se necessário -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
 </head>
 <body>
     <div class="container">
-            <h1>Desdobramento Lotofácil</h1>
+        <h1>Desdobramento Lotofácil</h1>
 
-            <h3>Números disponíveis (Desdobramento para 22 dezenas)</h3>
+        <h3>Números disponíveis (Desdobramento para 22 dezenas)</h3>
 
-            <div class="table-container">
-                <table id="numeros">
-                    <tr>
-                        <!-- Os números serão inseridos aqui via JavaScript -->
-                    </tr>
-                </table>
-            </div>
-
-            <div class="instructions">
-                <p><strong>INSTRUÇÕES:</strong></p>
-                <ol>
-                    <li>Exclua exatamente <strong>3 dezenas</strong>.</li>
-                    <li>Escolha <strong>uma dezena</strong> para fixar.</li>
-                    <li>Selecione a <strong>quantidade de jogos</strong> que deseja gerar.</li>
-                    <li>Escolha até 5 dezenas adicionais (<span style="color: red;">opcional</span>).</li>
-                    <li>Salve o jogo para abrir no Bloco de Notas ou exporte para o Excel.</li>
-                </ol>
-            </div>
-
-            <div class="input-container">
-                <label for="excluir">Dezenas a excluir:</label>
-                <input type="text" id="excluir" placeholder="Ex: 01, 05, 10">
-                <span id="excluir-error" class="error"></span>
-            </div>
-    
-            <div class="input-container">
-                <label for="fixar">Dezena a fixar:</label>
-                <input type="text" id="fixar" placeholder="Ex: 07">
-                <span id="fixar-error" class="error"></span>
-            </div>
-    
-            <div class="input-container">
-                <label for="jogos">Quantidade de jogos:</label>
-                <input type="number" id="jogos" min="1" max="100" placeholder="Ex: 5">
-                <span id="jogos-error" class="error"></span>
-            </div>
-    
-            <div class="input-container">
-                <label for="dezenas-adicionais">Dezenas adicionais: (<span style="color: red;">opcional</span>)</label>
-                <input type="number" id="dezenas-adicionais" min="0" max="5" placeholder="Ex: 2">
-            </div>
-    
-            <div class="button-generateGames">
-                <button id="gerar-jogos" disabled onclick="gerarJogos()">Gerar Jogos</button>
-            </div>
-            
-            <div class="userInformation">
-                <p>Os jogos serão gerados com 15 dezenas. Caso não haja adição de dezena (<span style="color: red;">opcional.</span>)</p>
-                <p>Por enquanto apenas jogos com 15 dezenas pode ser adicionado no programa cofiridor de jogos.</p>
-                <p>Os jogos gerados são checados automaticamente afim de não haver duplicidade.</p>
-                <p>O limite para a geração de jogos está setada para 1000.</p>
-            </div>
-
-            <div id="jogosGerados">
-                <!-- Os jogos gerados serão inseridos aqui via JavaScript -->
-            </div>
-
-            <div class="userInformationUnderstanding">
-                <th><b><i>RESUMO</i></b></th>
-                <ol>
-                    <li>A <b>dezena à fixar</b> não será incluída nos números aleatórios gerados.</li>
-                    <li>As <b>dezenas excluídas</b> serão removidas da lista de <i>números disponíveis</i>.</li>
-                    <li>Ao <b>gerar jogos</b> o formato sempre será 01, 02, ....</li>
-                    <li>Ao clicar em <b>salvar jogo</b> será gerado um arquivo *.txt para download.</li>
-                    <li>O <i>formato do arquivo para download</i> virá pronto para ser copiado/colado no
-                    <a href="https://play.google.com/store/apps/details?id=gerador.licoski.com&hl=pt_BR&pli=1" target="_blank"> conferidor da lotofácil</a>.</li>
-                </ol>
-            </div>
-
-                <div class="info-container">
-                    <h2>Resumo do Processo de Geração de Jogos</h2>
-                    <p>Sim, a técnica utilizada para gerar os jogos pode ser considerada uma forma de desdobramento, mas com um foco específico e personalizado. Aqui está um resumo de como isso funciona e como a quantidade de jogos afeta o processo:</p>
-
-                    <h3>O Que Está Sendo Feito</h3>
-                    <ul>
-                        <li><strong>Inclusão da Dezena Fixa:</strong> A dezena fixa é incluída em todos os jogos. Esta é uma estratégia comum em sistemas de loteria para garantir que uma dezena específica esteja sempre presente.</li>
-                        <li><strong>Distribuição de Números Restantes:</strong> Os números restantes são distribuídos entre os jogos gerados. Nenhum número é repetido dentro de um mesmo jogo, e a quantidade de números adicionais é determinada pela quantidade total de dezenas (15) menos a dezena fixa.</li>
-                        <li><strong>Variedade e Exclusões:</strong> A quantidade de jogos e a exclusão de certas dezenas influenciam a variabilidade dos jogos. Se você escolhe uma quantidade maior de jogos, o algoritmo tenta garantir uma distribuição mais variada dos números restantes, respeitando as exclusões e a presença obrigatória da dezena fixa.</li>
-                    </ul>
-
-                    <h3>Impacto da Quantidade de Jogos</h3>
-                    <ul>
-                        <li><strong>Menos Jogos:</strong> Se você gerar menos jogos, pode haver uma chance maior de que alguns números não apareçam em todos os jogos, especialmente se a quantidade de números disponíveis for relativamente pequena.</li>
-                        <li><strong>Mais Jogos:</strong> Quando você gera um número maior de jogos, o algoritmo tenta distribuir os números disponíveis de forma que todos sejam utilizados de maneira equilibrada, considerando a quantidade total de jogos e os números excluídos.</li>
-                    </ul>
-
-                    <h3>Exemplo de Desdobramento</h3>
-                    <p>Se você quiser gerar jogos de forma a maximizar a cobertura e garantir que cada jogo tenha uma combinação única de 15 dezenas com uma dezena fixa incluída, pode usar a lógica descrita. Isso é especialmente útil em loterias onde você quer ter a certeza de que a dezena fixa estará presente em cada combinação gerada.</p>
-                </div>
+        <div class="table-container">
+            <table id="numeros">
+                <tr>
+                    <!-- Os números serão inseridos aqui via JavaScript -->
+                </tr>
+            </table>
         </div>
+
+        <div class="instructions">
+            <p><strong>INSTRUÇÕES:</strong></p>
+            <ol>
+                <li>Exclua exatamente <strong>3 dezenas</strong>.</li>
+                <li>Escolha <strong>uma dezena</strong> para fixar.</li>
+                <li>Selecione a <strong>quantidade de jogos</strong> que deseja gerar.</li>
+                <li>Escolha até 5 dezenas adicionais (<span style="color: red;">opcional</span>).</li>
+                <li>Salve o jogo para abrir no Bloco de Notas ou exporte para o Excel.</li>
+            </ol>
+        </div>
+
+        <div class="input-container">
+            <label for="excluir">Dezenas a excluir:</label>
+            <input type="text" id="excluir" placeholder="Ex: 01, 05, 10">
+            <span id="excluir-error" class="error"></span>
+        </div>
+        
+        <div class="input-container">
+            <label for="fixar">Dezena a fixar:</label>
+            <input type="text" id="fixar" min="1" max="25" placeholder="Ex: de 01 a 25">
+            <span id="fixar-error" class="error"></span>
+        </div>
+        
+        <div class="input-container">
+            <label for="jogos">Quantidade de jogos: (<small><span style="color: red;">Até 1000</span></small>)</label>
+            <input type="number" id="jogos" min="1" max="1000" placeholder="Ex: 6 ou 06">
+            <span id="jogos-error" class="error"></span>
+        </div>
+        
+        <div class="input-container">
+            <label for="dezenas-adicionais">Dezenas adicionais: (<small><span style="color: red;">opcional</span></small>)</label>
+            <input type="number" id="dezenas-adicionais" min="0" max="5" placeholder="Ex: 00 até 05">
+            <span id="dezenas-adicionais-error" class="error"></span>
+        </div>
+        
+        <div class="button-container">
+            <button id="gerar-jogos" onclick="gerarJogos()">Gerar Jogos</button>
+            <button id="salvar-jogo" onclick="salvarJogo()">Salvar Jogo</button>
+            <button id="exportar-excel" onclick="exportarParaExcel()">Exportar para Excel</button>
+            <button id="resetar" onclick="resetar()">Resetar</button> <!-- Botão Resetar -->
+        </div>
+
+        <div id="jogosGerados">
+            <!-- Os jogos gerados serão inseridos aqui via JavaScript -->
+        </div>
+
+        <div class="userInformation">
+            <p>Os jogos serão gerados com 15 dezenas. Caso não haja adição de dezena (<span style="color: red;">opcional.</span>)</p>
+            <p>Por enquanto apenas jogos com 15 dezenas pode ser adicionado no programa conferidor de jogos.</p>
+            <p>Os jogos gerados são checados automaticamente afim de não haver duplicidade.</p>
+            <p>O limite para a geração de jogos está setada para 1000.</p>
+        </div>
+
+        <div class="userInformationUnderstanding">
+            <th><b><i>RESUMO</i></b></th>
+            <ol>
+                <li>A <b>dezena à fixar</b> não será incluída nos números aleatórios gerados.</li>
+                <li>As <b>dezenas excluídas</b> serão removidas da lista de <i>números disponíveis</i>.</li>
+                <li>Ao <b>gerar jogos</b> o formato sempre será 01, 02, ....</li>
+                <li>Ao clicar em <b>salvar jogo</b> será gerado um arquivo *.txt para download.</li>
+                <li>O <i>formato do arquivo para download</i> virá pronto para ser copiado/colado no
+                <a href="https://play.google.com/store/apps/details?id=gerador.licoski.com&hl=pt_BR&pli=1" target="_blank"> conferidor da lotofácil</a>.</li>
+            </ol>
+        </div>
+
+        <div class="info-container">
+            <h2>Resumo do Processo de Geração de Jogos</h2>
+            <p>Sim, a técnica utilizada para gerar os jogos pode ser considerada uma forma de desdobramento, mas com um foco específico e personalizado. Aqui está um resumo de como isso funciona e como a quantidade de jogos afeta o processo:</p>
+
+            <h3>O Que Está Sendo Feito</h3>
+            <ul>
+                <li><strong>Inclusão da Dezena Fixa:</strong> A dezena fixa é incluída em todos os jogos. Esta é uma estratégia comum em sistemas de loteria para garantir que uma dezena específica esteja sempre presente.</li>
+                <li><strong>Distribuição de Números Restantes:</strong> Os números restantes são distribuídos entre os jogos gerados. Nenhum número é repetido dentro de um mesmo jogo, e a quantidade de números adicionais é determinada pela quantidade total de dezenas (15) menos a dezena fixa.</li>
+                <li><strong>Variedade e Exclusões:</strong> A quantidade de jogos e a exclusão de certas dezenas influenciam a variabilidade dos jogos. Se você escolhe uma quantidade maior de jogos, o algoritmo tenta garantir uma distribuição mais variada dos números restantes, respeitando as exclusões e a presença obrigatória da dezena fixa.</li>
+            </ul>
+
+            <h3>Impacto da Quantidade de Jogos</h3>
+            <ul>
+                <li><strong>Menos Jogos:</strong> Se você gerar menos jogos, pode haver uma chance maior de que alguns números não apareçam em todos os jogos, especialmente se a quantidade de números disponíveis for relativamente pequena.</li>
+                <li><strong>Mais Jogos:</strong> Quando você gera um número maior de jogos, o algoritmo tenta distribuir os números disponíveis de forma que todos sejam utilizados de maneira equilibrada, considerando a quantidade total de jogos e os números excluídos.</li>
+            </ul>
+
+            <h3>Exemplo de Desdobramento</h3>
+            <p>Se você quiser gerar jogos de forma a maximizar a cobertura e garantir que cada jogo tenha uma combinação única de 15 dezenas com uma dezena fixa incluída, pode usar a lógica descrita. Isso é especialmente útil em loterias onde você quer ter a certeza de que a dezena fixa estará presente em cada combinação gerada.</p>
+        </div>
+    </div>
     
 
     <script src="./js/script.js"></script> <!-- Corrija o caminho do JavaScript se necessário -->
