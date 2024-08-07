@@ -46,7 +46,7 @@ function gerarJogos() {
     // Remove a dezena fixada dos números restantes
     numeros = numeros.filter(num => num !== fixar);
 
-    if (numeros.length < 14) {
+    if (numeros.length < (15 - 1)) { // 15 menos a dezena fixada
         alert('Não há números suficientes disponíveis para gerar jogos.');
         return;
     }
@@ -94,14 +94,18 @@ function gerarJogos() {
         // Seleciona as dezenas adicionais (opcional)
         let adicionaisSelecionados = [];
         for (let i = 0; i < dezenasAdicionais; i++) {
-            const randomIndex = Math.floor(Math.random() * numerosRestantes.length);
-            adicionaisSelecionados.push(numerosRestantes.splice(randomIndex, 1)[0]);
+            if (numerosRestantes.length > 0) {
+                const randomIndex = Math.floor(Math.random() * numerosRestantes.length);
+                adicionaisSelecionados.push(numerosRestantes.splice(randomIndex, 1)[0]);
+            }
         }
 
         // Preenche com números restantes até ter a quantidade correta de dezenas
         while (jogo.length < 15 + dezenasAdicionais) {
-            const randomIndex = Math.floor(Math.random() * numerosRestantes.length);
-            jogo.push(numerosRestantes.splice(randomIndex, 1)[0]);
+            if (numerosRestantes.length > 0) {
+                const randomIndex = Math.floor(Math.random() * numerosRestantes.length);
+                jogo.push(numerosRestantes.splice(randomIndex, 1)[0]);
+            }
         }
 
         jogo.sort((a, b) => a - b); // Ordena as dezenas
@@ -157,6 +161,11 @@ function gerarJogos() {
         mensagemSucesso.remove();
     }, 3000); // Remove a mensagem após 3 segundos
 }
+//FIM GERAR JOGOS
+
+
+
+
 
 // Restante das funções de validação e outras lógicas
 
