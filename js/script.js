@@ -161,7 +161,7 @@ function gerarJogos() {
 // Restante das funções de validação e outras lógicas
 
 
-//INICIO PARA VALIDAÇÃO DOS IMPUTS
+//INICIO PARA VALIDAÇÃO DOS InPUTS
 
 function validarExcluir() {
     const excluirInput = document.getElementById('excluir');
@@ -221,6 +221,34 @@ function validarJogos() {
         jogosError.textContent = '';
         return true;
     }
+}
+
+function validarDezenasAdicionais() {
+    const dezenasAdicionaisInput = document.getElementById('dezenas-adicionais');
+    const dezenasAdicionaisError = document.getElementById('dezenas-adicionais-error');
+    const dezenasAdicionaisValue = parseInt(dezenasAdicionaisInput.value.trim(), 10);
+
+    // Verifica se o valor é um número
+    if (isNaN(dezenasAdicionaisValue)) {
+        dezenasAdicionaisError.textContent = 'Por favor, insira um número válido.';
+        return false;
+    }
+
+    // Verifica se o valor está no intervalo válido
+    if (dezenasAdicionaisValue < 0 || dezenasAdicionaisValue > 5) {
+        dezenasAdicionaisError.textContent = 'As dezenas adicionais devem estar entre 0 e 5.';
+        return false;
+    }
+
+    // Mensagem para o caso de 0 dezenas adicionais
+    if (dezenasAdicionaisValue === 0) {
+        dezenasAdicionaisError.textContent = 'Se escolher zero, o jogo será gerado com um jogo simples (15 dezenas).';
+        return true; // O valor 0 é aceitável, então retornamos true aqui
+    }
+
+    // Se todas as validações passarem
+    dezenasAdicionaisError.textContent = '';
+    return true;
 }
 
 function validarFormulario() {
@@ -288,6 +316,7 @@ function resetarJogo() {
     document.getElementById('excluir-error').textContent = '';
     document.getElementById('fixar-error').textContent = '';
     document.getElementById('jogos-error').textContent = '';
+    document.getElementById('dezenas-adicionais-error').textContent = '';
 }
 
 //ESTE
