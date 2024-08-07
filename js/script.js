@@ -167,15 +167,33 @@ function validarExcluir() {
     const excluirInput = document.getElementById('excluir');
     const excluirError = document.getElementById('excluir-error');
     const excluirValues = excluirInput.value.split(',').map(num => num.trim());
-    
+    const validRange = /^[0-9]{2}$/;
+
+    // Verificar se o número de dezenas é exatamente 3
     if (excluirValues.length !== 3) {
         excluirError.textContent = 'Você deve excluir exatamente 3 dezenas.';
         return false;
-    } else {
-        excluirError.textContent = '';
-        return true;
     }
+
+    // Verificar cada valor para garantir que esteja no formato correto e no intervalo válido
+    for (let value of excluirValues) {
+        if (!validRange.test(value)) {
+            excluirError.textContent = 'Cada dezena deve ter exatamente dois dígitos (01 a 25).';
+            return false;
+        }
+
+        const number = parseInt(value, 10);
+        if (number < 1 || number > 25) {
+            excluirError.textContent = 'Cada dezena deve ser um número entre 01 e 25.';
+            return false;
+        }
+    }
+
+    // Se todas as validações passarem
+    excluirError.textContent = '';
+    return true;
 }
+
 
 function validarFixar() {
     const fixarInput = document.getElementById('fixar');
