@@ -52,7 +52,7 @@ function gerarJogos() {
     }
 
     // Define o limite máximo de jogos para evitar problemas de desempenho
-    const limiteMaximoJogos = 5000; // Ajuste esse valor conforme necessário
+    const limiteMaximoJogos = 15000; // Ajuste esse valor conforme necessário
 
     if (quantidadeJogos > limiteMaximoJogos) {
         alert(`A quantidade máxima de jogos é ${limiteMaximoJogos}. Por favor, ajuste a quantidade de jogos.`);
@@ -73,6 +73,7 @@ function gerarJogos() {
     // Calcula o tamanho da fonte com base no número de jogos
     const fontSize = getFontSize(quantidadeJogos);
 
+/*ANTES
     // Adiciona um cabeçalho acima dos jogos gerados
     const header = document.createElement('div');
     header.innerHTML = `<span style="color: red; font-weight: bold;">${quantidadeJogos}</span> Jogo${quantidadeJogos > 1 ? 's' : ''} gerado${quantidadeJogos > 1 ? 's' : ''} com sucesso!`;
@@ -83,9 +84,24 @@ function gerarJogos() {
     header.style.textAlign = 'center';
     header.style.marginBottom = '15px';
     jogosGeradosDiv.appendChild(header);
+*/
+
+/*DEPOIS*/
+// Adiciona um cabeçalho acima dos jogos gerados
+const header = document.createElement('div');
+header.innerHTML = `<span style="color: red; font-weight: bold;">${quantidadeJogos}</span> Jogo${quantidadeJogos > 1 ? 's' : ''} gerado${quantidadeJogos > 1 ? 's' : ''} com <span style="color: red;">${15 + dezenasAdicionais}</span> dezena${15 + dezenasAdicionais > 1 ? 's' : ''} cada um!`;
+header.style.backgroundColor = '#dff0d8';
+header.style.padding = '10px';
+header.style.border = '1px solid #d0e9c6';
+header.style.borderRadius = '5px';
+header.style.textAlign = 'center';
+header.style.marginBottom = '15px';
+jogosGeradosDiv.appendChild(header);
+
 
     // Conjunto para verificar duplicidade
     const jogosUnicos = new Set();
+    let resultados = [];
 
     for (let j = 0; j < quantidadeJogos; j++) {
         let jogo = [fixar]; // Começa com a dezena fixada
@@ -117,8 +133,7 @@ function gerarJogos() {
         if (!jogosUnicos.has(jogoString)) {
             jogosUnicos.add(jogoString);
 
-            const jogoElement = document.createElement('p');
-            jogoElement.innerHTML = `J${j + 1}- ${jogo.map(num => {
+            const jogoElement = `J${j + 1}- ${jogo.map(num => {
                 if (num === fixar) {
                     // Destaca a dezena fixada com uma cor diferente
                     return `<span style="color: red; font-weight: bold; font-family: Arial, sans-serif;">${num.toString().padStart(2, '0')}</span>`;
@@ -126,22 +141,18 @@ function gerarJogos() {
                     return `<span style="font-family: Courier New, monospace;">${num.toString().padStart(2, '0')}</span>`;
                 }
             }).join(', ')}`;
-            jogoElement.style.border = '1px solid #dcdcdc'; // Tom de cinza claro para a borda
-            jogoElement.style.padding = '10px';
-            jogoElement.style.margin = '5px 0';
-            jogoElement.style.textAlign = 'center'; // Centraliza o texto
-            jogoElement.style.backgroundColor = '#f5f5f5'; // Tom de cinza claro para o fundo
-            jogoElement.style.color = '#333'; // Tom de cinza escuro para o texto
-            jogoElement.style.fontSize = fontSize; // Ajusta o tamanho da fonte
-            jogoElement.style.borderRadius = '4px'; // Bordas arredondadas
 
-            jogosGeradosDiv.appendChild(jogoElement);
+            resultados.push(`<p style="border: 1px solid #dcdcdc; padding: 10px; margin: 5px 0; text-align: center; background-color: #f5f5f5; color: #333; font-size: ${fontSize}; border-radius: 4px;">${jogoElement}</p>`);
         } else {
             // Reduz o índice para garantir que o número desejado de jogos seja gerado
             j--;
         }
     }
 
+    jogosGeradosDiv.innerHTML += resultados.join('');
+
+
+/*ANTES
     // Mensagem de sucesso exibida ao centro da tela
     const mensagemSucesso = document.createElement('div');
     mensagemSucesso.innerHTML = `<span style="color: red; font-weight: bold;">${quantidadeJogos}</span> Jogo${quantidadeJogos > 1 ? 's' : ''} gerado${quantidadeJogos > 1 ? 's' : ''} com sucesso!`;
@@ -160,12 +171,30 @@ function gerarJogos() {
     setTimeout(() => {
         mensagemSucesso.remove();
     }, 3000); // Remove a mensagem após 3 segundos
+*/
+
+    /*DEPOIS*/
+    // Mensagem de sucesso exibida ao centro da tela
+    const mensagemSucesso = document.createElement('div');
+    mensagemSucesso.innerHTML = `<span style="color: red; font-weight: bold;">${quantidadeJogos}</span> Jogo${quantidadeJogos > 1 ? 's' : ''} gerado${quantidadeJogos > 1 ? 's' : ''} com <span style="color: red;">${15 + dezenasAdicionais}</span> dezena${15 + dezenasAdicionais > 1 ? 's' : ''} cada um!`;
+    mensagemSucesso.style.position = 'fixed';
+    mensagemSucesso.style.top = '50%';
+    mensagemSucesso.style.left = '50%';
+    mensagemSucesso.style.transform = 'translate(-50%, -50%)';
+    mensagemSucesso.style.backgroundColor = '#dff0d8';
+    mensagemSucesso.style.padding = '20px';
+    mensagemSucesso.style.border = '1px solid #d0e9c6';
+    mensagemSucesso.style.borderRadius = '5px';
+    mensagemSucesso.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+    mensagemSucesso.style.zIndex = '1000';
+    document.body.appendChild(mensagemSucesso);
+
+    setTimeout(() => {
+        mensagemSucesso.remove();
+    }, 5000); // Remove a mensagem após 5 segundos
+
+
 }
-//FIM GERAR JOGOS
-
-
-
-
 
 // Restante das funções de validação e outras lógicas
 
@@ -227,6 +256,8 @@ function validarFixar() {
     return true;
 }
 
+/* ANTES
+
 function validarJogos() {
     const jogosInput = document.getElementById('jogos');
     const jogosError = document.getElementById('jogos-error');
@@ -234,6 +265,23 @@ function validarJogos() {
     
     if (isNaN(jogosValue) || jogosValue < 1 || jogosValue > 1000) {
         jogosError.textContent = 'Selecione um número válido de jogos (1 a 1000).';
+        return false;
+    } else {
+        jogosError.textContent = '';
+        return true;
+    }
+}
+*/
+
+/*DEPOIS*/
+function validarJogos() {
+    const jogosInput = document.getElementById('jogos');
+    const jogosError = document.getElementById('jogos-error');
+    const jogosValue = parseInt(jogosInput.value.trim(), 10);
+
+    // Validação do número de jogos, agora permitido de 1 até 15.000
+    if (isNaN(jogosValue) || jogosValue < 1 || jogosValue > 15000) {
+        jogosError.textContent = 'Selecione um número válido de jogos (1 a 15.000).';
         return false;
     } else {
         jogosError.textContent = '';
