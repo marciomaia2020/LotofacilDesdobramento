@@ -208,14 +208,23 @@ function validarFixar() {
     const fixarInput = document.getElementById('fixar');
     const fixarError = document.getElementById('fixar-error');
     const fixarValue = fixarInput.value.trim();
-    
+
+    // Verifica se o campo está vazio
     if (fixarValue === '') {
         fixarError.textContent = 'Você deve escolher uma dezena para fixar.';
         return false;
-    } else {
-        fixarError.textContent = '';
-        return true;
     }
+
+    // Verifica se o valor está entre 1 e 25
+    const fixarNumber = parseInt(fixarValue, 10);
+    if (isNaN(fixarNumber) || fixarNumber < 1 || fixarNumber > 25) {
+        fixarError.textContent = 'Por favor, insira uma dezena válida entre 01 e 25.';
+        return false;
+    }
+
+    // Se todas as validações passarem
+    fixarError.textContent = '';
+    return true;
 }
 
 function validarJogos() {
@@ -315,13 +324,17 @@ function salvarJogo() {
 }
 
 //ESTE
-function resetarJogo() {
+function resetar() {
+    // Limpa os valores dos campos de entrada
     document.getElementById('excluir').value = '';
     document.getElementById('fixar').value = '';
     document.getElementById('jogos').value = '';
     document.getElementById('dezenas-adicionais').value = '';
+
+    // Limpa o conteúdo gerado
     document.getElementById('jogosGerados').innerHTML = '';
 
+    // Limpa as mensagens de erro
     document.getElementById('excluir-error').textContent = '';
     document.getElementById('fixar-error').textContent = '';
     document.getElementById('jogos-error').textContent = '';
