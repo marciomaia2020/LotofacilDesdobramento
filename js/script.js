@@ -201,6 +201,7 @@ jogosGeradosDiv.appendChild(header);
 
 //INICIO PARA VALIDAÇÃO DOS InPUTS
 
+/* ANTES 
 function validarExcluir() {
     const excluirInput = document.getElementById('excluir');
     const excluirError = document.getElementById('excluir-error');
@@ -209,7 +210,7 @@ function validarExcluir() {
 
     // Verificar se o número de dezenas é exatamente 3
     if (excluirValues.length !== 3) {
-        excluirError.textContent = 'Você deve excluir exatamente 3 dezenas.';
+        excluirError.textContent = 'Você deve digitar exatamente 3 dezenas.';
         return false;
     }
 
@@ -231,6 +232,46 @@ function validarExcluir() {
     excluirError.textContent = '';
     return true;
 }
+*/
+function validarExcluir() {
+    const excluirInput = document.getElementById('excluir');
+    const excluirError = document.getElementById('excluir-error');
+    const excluirValues = excluirInput.value.split(',').map(num => num.trim());
+    const validRange = /^[0-9]{2}$/;
+
+    // Verificar se o número de dezenas é exatamente 3
+    if (excluirValues.length !== 3) {
+        excluirError.textContent = 'Você deve excluir exatamente 3 dezenas.';
+        return false;
+    }
+
+    // Verificar se todas as dezenas estão no formato válido (dois dígitos)
+    for (let i = 0; i < excluirValues.length; i++) {
+        if (!validRange.test(excluirValues[i])) {
+            excluirError.textContent = 'As dezenas devem estar no formato de dois dígitos (por exemplo, 01, 05, 20).';
+            return false;
+        }
+
+        // Verificar se as dezenas estão entre 01 e 25
+        const numberValue = parseInt(excluirValues[i], 10);
+        if (numberValue < 1 || numberValue > 25) {
+            excluirError.textContent = 'As dezenas devem estar entre 01 e 25.';
+            return false;
+        }
+    }
+
+    // Verificar se todas as dezenas são únicas
+    const uniqueValues = new Set(excluirValues);
+    if (uniqueValues.size !== excluirValues.length) {
+        excluirError.textContent = 'As dezenas não podem ser repetidas. Insira 3 dezenas diferentes.';
+        return false;
+    }
+
+    // Limpar a mensagem de erro se a validação passar
+    excluirError.textContent = '';
+    return true;
+}
+
 
 
 function validarFixar() {
@@ -289,6 +330,7 @@ function validarJogos() {
     }
 }
 
+/*ANTES
 function validarDezenasAdicionais() {
     const dezenasAdicionaisInput = document.getElementById('dezenas-adicionais');
     const dezenasAdicionaisError = document.getElementById('dezenas-adicionais-error');
@@ -316,6 +358,47 @@ function validarDezenasAdicionais() {
     dezenasAdicionaisError.textContent = '';
     return true;
 }
+*/
+
+/*DEPOIS*/
+
+function validarDezenasAdicionais() {
+    const dezenasAdicionaisInput = document.getElementById('dezenas-adicionais');
+    const dezenasAdicionaisError = document.getElementById('dezenas-adicionais-error');
+    const dezenasAdicionaisValue = parseInt(dezenasAdicionaisInput.value.trim(), 10);
+
+    // Verifica se o valor é um número
+    if (isNaN(dezenasAdicionaisValue)) {
+        dezenasAdicionaisError.textContent = 'Por favor, insira um número válido.';
+        return false;
+    }
+
+    // Verifica se o valor está fora do intervalo válido
+    if (dezenasAdicionaisValue < 0) {
+        dezenasAdicionaisError.textContent = 'O valor não pode ser negativo.';
+        return false;
+    }
+
+    if (dezenasAdicionaisValue > 5) {
+        dezenasAdicionaisError.textContent = 'As dezenas adicionais devem estar entre 0 e 5.';
+        return false;
+    }
+
+    // Mensagem para o caso de 0 dezenas adicionais
+    if (dezenasAdicionaisValue === 0) {
+        dezenasAdicionaisError.textContent = 'Se escolher zero, o jogo será gerado com um jogo simples (15 dezenas).';
+    } else {
+        // Limpa a mensagem de erro se o valor for válido
+        dezenasAdicionaisError.textContent = '';
+    }
+
+    // Se todas as validações passarem
+    return true;
+}
+
+
+
+
 
 function validarFormulario() {
     const isExcluirValid = validarExcluir();
@@ -439,4 +522,13 @@ function exportarParaExcel() {
     XLSX.writeFile(wb, 'jogos_lotofacil.xlsx');
 }
 
+/*
 
+    // Código JavaScript para inserir números na tabela e manipular entradas de usuário
+        const tabela = document.querySelector("#numeros tr");
+        for (let i = 1; i <= 25; i++) {
+            const td = document.createElement("td");
+            td.textContent = i.toString().padStart(2, '0');
+            tabela.appendChild(td);
+        }
+*/
