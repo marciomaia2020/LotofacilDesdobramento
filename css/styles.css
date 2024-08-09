@@ -120,9 +120,10 @@ small {
   font-size: 0.8em; /* Ajuste o tamanho da fonte conforme necessário */
   color: #555; /* Cor do texto, pode ser ajustada conforme a sua preferência */
 }
-.instructions{
-  text-align: left; /* Alinha o texto à esquerda */
-  font-size: 0.9em; /* Ajuste o tamanho da fonte conforme necessário */
+.instructions {
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: gray;
 }
 .button-generateGames{
   text-align: center; /* Alinha o texto à esquerda */
@@ -145,11 +146,11 @@ input[type="number"] {
   padding: 8px;
   margin: 5px auto; /* Margem */
 }
-
 .userInformation{
   text-align: center; /* Alinha o texto à esquerda */
-  text-align: justify;
+  /*text-align: justify;*/
   font-size: 0.9em;
+  margin-top: 20px;
 }
 .userInformationUnderstanding{
   text-align: left; /* Alinha o texto à esquerda */
