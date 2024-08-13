@@ -57,6 +57,7 @@ h1, h3 {
             margin-bottom: 20px;
             font-size: 13px;
             color: gray;
+            line-height: 1.7;
         }
 
 .input-container {
@@ -87,8 +88,8 @@ button {
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            background-color: #A9CF46;
-            color: white;
+            background-color: #A55592;
+            color: black;
             font-size: 14px;
             transition: background-color 0.3s;
         }
@@ -123,7 +124,11 @@ button:hover {
             color: red;
             font-size: 12px;
         }
-
+input::placeholder {
+            color: #A55592;
+            font-style: italic;
+            font-size: 12px;
+        }
 
 
 

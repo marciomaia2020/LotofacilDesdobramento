@@ -52,7 +52,7 @@ function gerarJogos() {
     }
 
     // Define o limite máximo de jogos para evitar problemas de desempenho
-    const limiteMaximoJogos = 5000; // Ajuste esse valor conforme necessário
+    const limiteMaximoJogos = 4000; // Ajuste esse valor conforme necessário
 
     if (quantidadeJogos > limiteMaximoJogos) {
         alert(`A quantidade máxima de jogos é ${limiteMaximoJogos}. Por favor, ajuste a quantidade de jogos.`);
@@ -165,7 +165,7 @@ jogosGeradosDiv.appendChild(header);
     mensagemSucesso.style.border = '1px solid #d0e9c6';
     mensagemSucesso.style.borderRadius = '5px';
     mensagemSucesso.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
-    mensagemSucesso.style.zIndex = '5000';
+    mensagemSucesso.style.zIndex = '4000';
     document.body.appendChild(mensagemSucesso);
 
     setTimeout(() => {
@@ -186,12 +186,12 @@ jogosGeradosDiv.appendChild(header);
     mensagemSucesso.style.border = '1px solid #d0e9c6';
     mensagemSucesso.style.borderRadius = '5px';
     mensagemSucesso.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
-    mensagemSucesso.style.zIndex = '5000';
+    mensagemSucesso.style.zIndex = '4000';
     document.body.appendChild(mensagemSucesso);
 
     setTimeout(() => {
         mensagemSucesso.remove();
-    }, 5000); // Remove a mensagem após 5 segundos
+    }, 4000); // Remove a mensagem após 5 segundos
 
 
 }
@@ -304,8 +304,8 @@ function validarJogos() {
     const jogosError = document.getElementById('jogos-error');
     const jogosValue = parseInt(jogosInput.value, 10);
     
-    if (isNaN(jogosValue) || jogosValue < 1 || jogosValue > 5000) {
-        jogosError.textContent = 'Selecione um número válido de jogos (1 a 5000).';
+    if (isNaN(jogosValue) || jogosValue < 1 || jogosValue > 4000) {
+        jogosError.textContent = 'Selecione um número válido de jogos (1 a 4000).';
         return false;
     } else {
         jogosError.textContent = '';
@@ -320,9 +320,9 @@ function validarJogos() {
     const jogosError = document.getElementById('jogos-error');
     const jogosValue = parseInt(jogosInput.value.trim(), 10);
 
-    // Validação do número de jogos, agora permitido de 1 até 5000
-    if (isNaN(jogosValue) || jogosValue < 1 || jogosValue > 5000) {
-        jogosError.textContent = 'Selecione um número válido de jogos (1 a 5000).';
+    // Validação do número de jogos, agora permitido de 1 até 4000
+    if (isNaN(jogosValue) || jogosValue < 1 || jogosValue > 4000) {
+        jogosError.textContent = 'Selecione um número válido de jogos (1 a 4000).';
         return false;
     } else {
         jogosError.textContent = '';
